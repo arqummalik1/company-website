@@ -121,7 +121,7 @@ export function Contact() {
         {
             icon: Phone,
             label: 'Phone',
-            value: '+191 7006082958',
+            value: '+91 7006082958',
             color: 'text-purple-500'
         },
         {
