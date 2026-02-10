@@ -1,11 +1,75 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, Calendar } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { Loader2 } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import { blogPosts } from '@/data/blog';
+import { client, isSanityConfigured, BlogPost } from '@/lib/sanity';
+import { BlogCard } from '@/components/blog/BlogCard';
+
+// Fallback dummy data while Sanity is being set up
+const dummyPosts: BlogPost[] = [
+    {
+        _id: '1',
+        title: 'The Future of AI in Software Development',
+        slug: { current: 'future-of-ai' },
+        publishedAt: new Date().toISOString(),
+        author: { name: 'Arqum Malik', image: null },
+        categories: [{ title: 'Technology' }],
+        excerpt: 'How Artificial Intelligence is transforming the way we build and deploy software applications.',
+        mainImage: null,
+        body: []
+    },
+    {
+        _id: '2',
+        title: 'Building Scalable SaaS Applications',
+        slug: { current: 'scalable-saas' },
+        publishedAt: new Date().toISOString(),
+        author: { name: 'Arqum Malik', image: null },
+        categories: [{ title: 'Development' }],
+        excerpt: 'Key strategies and patterns for creating robust, enterprise-grade SaaS platforms.',
+        mainImage: null,
+        body: []
+    }
+];
 
 export function Blog() {
     const { ref, isVisible } = useScrollReveal();
+    const [posts, setPosts] = useState<BlogPost[]>(dummyPosts);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (!isSanityConfigured() || !client) {
+            // Sanity not configured yet, use dummy data
+            return;
+        }
+
+        setLoading(true);
+        const query = `*[_type == "post"] | order(publishedAt desc) {
+            _id,
+            title,
+            slug,
+            publishedAt,
+            mainImage,
+            excerpt,
+            author->{
+                name,
+                image
+            },
+            categories[]->{
+                title
+            }
+        }`;
+
+        client.fetch(query)
+            .then((data: BlogPost[]) => {
+                setPosts(data.length > 0 ? data : dummyPosts);
+                setLoading(false);
+            })
+            .catch((err: Error) => {
+                console.error('Sanity fetch error:', err);
+                setPosts(dummyPosts);
+                setLoading(false);
+            });
+    }, []);
 
     return (
         <section id="blog" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -16,95 +80,38 @@ export function Blog() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={isVisible ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.7 }}
-                    className="flex justify-between items-end mb-12"
+                    className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6"
                 >
                     <div>
                         <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4">
                             Latest <span className="gradient-text">Insights</span>
                         </h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-400">
-                            Stay updated with the latest trends in technology
+                        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl">
+                            Stay updated with our latest thoughts on technology, design, and innovation.
                         </p>
                     </div>
-                    <a
-                        href="#"
-                        className="hidden md:inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
-                    >
-                        View All Articles
-                        <ArrowRight className="w-5 h-5" />
-                    </a>
                 </motion.div>
 
-                {/* Blog Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogPosts.map((post, index) => (
-                        <motion.article
-                            key={post.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.7, delay: index * 0.1 }}
-                            className="group bg-white dark:bg-gray-700 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-                        >
-                            {/* Image */}
-                            <div className="relative h-48 overflow-hidden">
-                                <img
-                                    src={post.image}
-                                    alt={post.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                                <Badge className="absolute top-4 left-4 bg-white/90 dark:bg-gray-800/90">
-                                    {post.category}
-                                </Badge>
-                            </div>
-
-                            {/* Content */}
-                            <div className="p-6">
-                                {/* Meta */}
-                                <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
-                                    <span className="flex items-center gap-1">
-                                        <Calendar className="w-4 h-4" />
-                                        {post.date}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4" />
-                                        {post.readTime}
-                                    </span>
-                                </div>
-
-                                {/* Title */}
-                                <h3 className="text-xl font-bold mb-3 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                                    {post.title}
-                                </h3>
-
-                                {/* Excerpt */}
-                                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                                    {post.excerpt}
-                                </p>
-
-                                {/* Read More */}
-                                <a
-                                    href="#"
-                                    className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
-                                >
-                                    Read More
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </a>
-                            </div>
-                        </motion.article>
-                    ))}
-                </div>
-
-                {/* Mobile View All Link */}
-                <div className="md:hidden text-center mt-8">
-                    <a
-                        href="#"
-                        className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
-                    >
-                        View All Articles
-                        <ArrowRight className="w-5 h-5" />
-                    </a>
-                </div>
+                {/* Content */}
+                {loading ? (
+                    <div className="flex justify-center py-20">
+                        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {posts.map((post, index) => (
+                            <motion.div
+                                key={post._id}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                className="h-full"
+                            >
+                                <BlogCard post={post} />
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

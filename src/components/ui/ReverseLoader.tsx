@@ -10,7 +10,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
     const [isExiting, setIsExiting] = useState(false);
 
     useEffect(() => {
-        const duration = 2500; // 2.5 seconds for smooth experience
+        const duration = 1250; // 1.25 seconds — 50% faster
         const steps = 100;
         const interval = duration / steps;
 
@@ -19,7 +19,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                 if (prev <= 0) {
                     clearInterval(timer);
                     setIsExiting(true);
-                    setTimeout(() => onComplete?.(), 800);
+                    setTimeout(() => onComplete?.(), 500);
                     return 0;
                 }
                 return prev - 1;
@@ -44,7 +44,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                 <motion.div
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0, scale: 1.1 }}
-                    transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+                    transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                     className="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center overflow-hidden"
                 >
                     {/* Animated background particles */}
@@ -136,7 +136,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="text-3xl font-bold text-white mb-2 tracking-wider"
                         >
-                            QUBITT
+                            QUBIT
                         </motion.h1>
 
                         <motion.p
