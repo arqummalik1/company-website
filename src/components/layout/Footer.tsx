@@ -35,7 +35,7 @@ export function Footer() {
                                 Q
                             </div>
                             <span className="text-2xl font-display font-bold text-white">
-                                Qubitt <span className="gradient-text">Technologies</span>
+                                Qubit <span className="gradient-text">Technologies</span>
                             </span>
                         </div>
                         <p className="text-gray-400 text-sm mb-4">
@@ -96,7 +96,7 @@ export function Footer() {
                 {/* Bottom Bar */}
                 <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-400 text-sm">
-                        © {currentYear} Qubitt Technologies. All rights reserved.
+                        © {currentYear} Qubit Technologies. All rights reserved.
                     </p>
                     <div className="flex gap-6">
                         <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">

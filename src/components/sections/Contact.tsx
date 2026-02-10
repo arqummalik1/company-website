@@ -121,13 +121,13 @@ export function Contact() {
         {
             icon: Phone,
             label: 'Phone',
-            value: '+1 (555) 123-4567',
+            value: '+191 7006082958',
             color: 'text-purple-500'
         },
         {
             icon: MapPin,
             label: 'Location',
-            value: 'San Francisco, CA',
+            value: 'Jammu, India',
             color: 'text-cyan-500'
         }
     ];

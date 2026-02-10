@@ -55,7 +55,7 @@ export function Navbar() {
                             Q
                         </div>
                         <span className="text-2xl font-display font-bold">
-                            Qubitt <span className="gradient-text">Technologies</span>
+                            Qubit <span className="gradient-text">Technologies</span>
                         </span>
                     </div>
 

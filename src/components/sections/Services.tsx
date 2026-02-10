@@ -108,10 +108,10 @@ export function Services() {
                     })}
                 </div>
 
-                {/* Features Highlight - Why Choose Qubitt */}
+                {/* Features Highlight - Why Choose Qubit */}
                 <div className="mt-20 reveal">
                     <h3 className="text-3xl font-display font-bold text-center mb-12">
-                        Why Choose <span className="text-gradient">Qubitt</span>
+                        Why Choose <span className="text-gradient">Qubit</span>
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {features.map((feature, index) => {
