@@ -111,6 +111,7 @@ export function Contact() {
         });
     };
 
+    // Contact Information Data
     const contactInfo = [
         {
             icon: Mail,
