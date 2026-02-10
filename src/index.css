@@ -10,47 +10,183 @@
 
   body {
     @apply font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Ultra-smooth theme transitions - Enhanced */
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  /* View Transitions API - Ultra smooth theme switching */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 500ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  ::view-transition-old(root) {
+    animation-name: fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: fade-in;
+  }
+
+  /* Smooth fade animations for theme switching */
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Performance optimizations */
+  img,
+  video {
+    content-visibility: auto;
+  }
+
+  /* GPU acceleration for transforms */
+  .transform {
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @layer utilities {
 
-  /* Cursor glow effect - desktop only */
-  @media (min-width: 1024px) {
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    body:hover::before {
-      opacity: 1;
-    }
-  }
-
-  /* Gradient text */
+  /* Gradient text - matching index.html exactly */
   .gradient-text {
     @apply bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent;
   }
 
-  /* Glass effect */
-  .glass {
-    @apply backdrop-blur-md bg-white/70 dark:bg-gray-800/70 border border-white/20;
+  /* Text gradient - matching index.html 135deg style */
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Animated gradient background */
-  .animated-gradient {
+  /* Glass effect - matching index.html exactly */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark .glass {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Animated gradient background - matching index.html */
+  .animated-gradient,
+  .bg-gradient-animate {
     background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
-    background-size: 300% 300%;
-    animation: gradient 8s ease infinite;
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  /* Hero background gradient orbs - matching index.html */
+  .hero-bg {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  }
+
+  .dark .hero-bg {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+  }
+
+  /* Service card hover - matching index.html */
+  .service-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  /* Portfolio item hover - matching index.html */
+  .portfolio-item {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+  }
+
+  .portfolio-item:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Cursor glow effect - matching index.html */
+  .cursor-glow {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+  }
+
+  /* Performance hint for animated elements */
+  .will-animate {
+    will-change: transform, opacity;
+  }
+
+  /* Scroll reveal animations - matching index.html exactly */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays for sequential animations - matching index.html */
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    transition-delay: 0.4s;
   }
 
   /* Reduced motion support */
@@ -62,11 +198,19 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Low-end device optimizations */
+  @media (max-width: 768px) {
+    * {
+      will-change: auto !important;
     }
   }
 }
 
-/* Custom animations */
+/* Custom animations - matching index.html */
 @keyframes float {
 
   0%,
@@ -80,13 +224,42 @@
 }
 
 @keyframes gradient {
-
-  0%,
-  100% {
+  0% {
     background-position: 0% 50%;
   }
 
   50% {
     background-position: 100% 50%;
   }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Custom scrollbar - matching index.html */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Theme transition animation */
+.theme-transitioning * {
+  transition-duration: 500ms !important;
 }

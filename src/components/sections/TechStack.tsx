@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -110,6 +110,7 @@ export function TechStack() {
                                     className="flex-shrink-0 group cursor-pointer"
                                     style={{ width: '80px' }}
                                     aria-label={`Learn about ${tech.name}`}
+                                    title={tech.name}
                                 >
                                     <div className="flex flex-col items-center gap-3 transition-all duration-300 hover:scale-110">
                                         {/* Icon container - transparent background */}
@@ -121,10 +122,6 @@ export function TechStack() {
                                                 loading="lazy"
                                             />
                                         </div>
-                                        {/* Name - always visible but subtle */}
-                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-center group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors duration-300">
-                                            {tech.name}
-                                        </span>
                                     </div>
                                 </button>
                             ))}

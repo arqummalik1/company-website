@@ -1,40 +1,107 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import emailjs from '@emailjs/browser';
 
 export function Contact() {
     const { ref, isVisible } = useScrollReveal();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        company: '',
-        service: '',
+        countryCode: '+1',
+        phone: '',
+        subject: '',
         message: ''
     });
     const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState<'success' | 'error'>('success');
+    const [toastMessage, setToastMessage] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
-        // Show toast notification
-        setShowToast(true);
+        try {
+            // Get EmailJS credentials from environment variables
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const ownerTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_OWNER;
+            const customerTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_CUSTOMER;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            company: '',
-            service: '',
-            message: ''
-        });
+            // Validate environment variables
+            if (!serviceId || !ownerTemplateId || !customerTemplateId || !publicKey) {
+                throw new Error('EmailJS configuration is missing. Please set up your environment variables.');
+            }
 
-        // Hide toast after 5 seconds
-        setTimeout(() => {
-            setShowToast(false);
-        }, 5000);
+            // Prepare template parameters
+            const fullPhone = formData.phone ? `${formData.countryCode} ${formData.phone}` : 'Not provided';
+            const templateParams = {
+                from_name: formData.name,
+                from_email: formData.email,
+                phone: fullPhone,
+                company: formData.subject || 'Not provided',
+                message: formData.message,
+                to_email: formData.email, // For customer thank you email
+                submission_time: new Date().toLocaleString('en-US', {
+                    dateStyle: 'full',
+                    timeStyle: 'short'
+                })
+            };
+
+            // Send email to owner (arqummalik1@gmail.com)
+            await emailjs.send(
+                serviceId,
+                ownerTemplateId,
+                templateParams,
+                publicKey
+            );
+
+            // Send thank you email to customer
+            await emailjs.send(
+                serviceId,
+                customerTemplateId,
+                templateParams,
+                publicKey
+            );
+
+            // Show success toast
+            setToastType('success');
+            setToastMessage('Thank you! Your message has been sent successfully. Check your email for confirmation.');
+            setShowToast(true);
+
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                countryCode: '+1',
+                phone: '',
+                subject: '',
+                message: ''
+            });
+
+        } catch (error) {
+            console.error('Email sending failed:', error);
+
+            // Show error toast
+            setToastType('error');
+            setToastMessage(
+                error instanceof Error && error.message.includes('configuration')
+                    ? 'Email service not configured. Please contact us directly at arqummalik1@gmail.com'
+                    : 'Failed to send message. Please try again or contact us directly at arqummalik1@gmail.com'
+            );
+            setShowToast(true);
+        } finally {
+            setIsSubmitting(false);
+
+            // Hide toast after 7 seconds
+            setTimeout(() => {
+                setShowToast(false);
+            }, 7000);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -48,7 +115,7 @@ export function Contact() {
         {
             icon: Mail,
             label: 'Email',
-            value: 'hello@qubitt.tech',
+            value: 'arqummalik1@gmail.com',
             color: 'text-blue-500'
         },
         {
@@ -128,7 +195,7 @@ export function Contact() {
                                         key={social.label}
                                         href={social.href}
                                         aria-label={social.label}
-                                        className="glass p-3 rounded-lg hover:bg-blue-500/20 transition-colors"
+                                        className="glass p-3 rounded-full hover:bg-blue-500/20 transition-colors"
                                     >
                                         <social.icon className="w-5 h-5" />
                                     </a>
@@ -158,7 +225,8 @@ export function Contact() {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                            disabled={isSubmitting}
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -173,55 +241,83 @@ export function Contact() {
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                            disabled={isSubmitting}
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="john@example.com"
                                         />
                                     </div>
                                 </div>
 
-                                {/* Company */}
+                                {/* Phone Number with Country Code */}
                                 <div>
-                                    <label htmlFor="company" className="block text-sm font-medium mb-2">
-                                        Company
+                                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                                        Phone Number
+                                    </label>
+                                    <div className="flex gap-2">
+                                        <select
+                                            name="countryCode"
+                                            value={formData.countryCode}
+                                            onChange={handleChange}
+                                            disabled={isSubmitting}
+                                            className="w-40 px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            <option value="+1">🇺🇸 USA +1</option>
+                                            <option value="+44">🇬🇧 UK +44</option>
+                                            <option value="+91">🇮🇳 India +91</option>
+                                            <option value="+86">🇨🇳 China +86</option>
+                                            <option value="+81">🇯🇵 Japan +81</option>
+                                            <option value="+49">🇩🇪 Germany +49</option>
+                                            <option value="+33">🇫🇷 France +33</option>
+                                            <option value="+61">🇦🇺 Australia +61</option>
+                                            <option value="+971">🇦🇪 UAE +971</option>
+                                            <option value="+65">🇸🇬 Singapore +65</option>
+                                            <option value="+7">🇷🇺 Russia +7</option>
+                                            <option value="+82">🇰🇷 S. Korea +82</option>
+                                            <option value="+34">🇪🇸 Spain +34</option>
+                                            <option value="+39">🇮🇹 Italy +39</option>
+                                            <option value="+55">🇧🇷 Brazil +55</option>
+                                            <option value="+52">🇲🇽 Mexico +52</option>
+                                            <option value="+27">🇿🇦 S. Africa +27</option>
+                                            <option value="+60">🇲🇾 Malaysia +60</option>
+                                            <option value="+62">🇮🇩 Indonesia +62</option>
+                                            <option value="+63">🇵🇭 Philippines +63</option>
+                                        </select>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            disabled={isSubmitting}
+                                            className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            placeholder="123-456-7890"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Subject */}
+                                <div>
+                                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                                        Subject
                                     </label>
                                     <input
                                         type="text"
-                                        id="company"
-                                        name="company"
-                                        value={formData.company}
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                        placeholder="Your Company"
+                                        disabled={isSubmitting}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        placeholder="What can we help you with?"
                                     />
                                 </div>
 
-                                {/* Service */}
-                                <div>
-                                    <label htmlFor="service" className="block text-sm font-medium mb-2">
-                                        Service Interested In *
-                                    </label>
-                                    <select
-                                        id="service"
-                                        name="service"
-                                        value={formData.service}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                    >
-                                        <option value="">Select a service</option>
-                                        <option value="custom-websites">Custom Websites</option>
-                                        <option value="mobile-apps">Mobile Apps</option>
-                                        <option value="web-apps">Web Apps / SaaS</option>
-                                        <option value="ai-chatbots">AI Chatbots / Assistants</option>
-                                        <option value="ui-ux">UI/UX Design</option>
-                                        <option value="full-solutions">Full Solutions</option>
-                                    </select>
-                                </div>
+
 
                                 {/* Message */}
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium mb-2">
-                                        Project Details *
+                                        Message *
                                     </label>
                                     <textarea
                                         id="message"
@@ -229,8 +325,9 @@ export function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
+                                        disabled={isSubmitting}
                                         rows={5}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="Tell us about your project..."
                                     />
                                 </div>
@@ -240,9 +337,10 @@ export function Contact() {
                                     type="submit"
                                     size="lg"
                                     className="w-full"
-                                    icon={<Send className="w-5 h-5" />}
+                                    disabled={isSubmitting}
+                                    icon={isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                                 >
-                                    Send Message
+                                    {isSubmitting ? 'Sending...' : 'Send Message'}
                                 </Button>
                             </form>
                         </Card>
@@ -251,26 +349,36 @@ export function Contact() {
             </div>
 
             {/* Toast Notification */}
-            {showToast && (
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }}
-                    className="fixed bottom-8 right-8 z-50 glass p-6 rounded-lg shadow-2xl max-w-md"
-                >
-                    <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                            <Send className="w-5 h-5 text-white" />
+            <AnimatePresence>
+                {showToast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 50, scale: 0.9 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed bottom-8 right-8 z-50 glass p-6 rounded-lg shadow-2xl max-w-md"
+                    >
+                        <div className="flex items-start gap-3">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${toastType === 'success' ? 'bg-green-500' : 'bg-red-500'
+                                }`}>
+                                {toastType === 'success' ? (
+                                    <CheckCircle className="w-5 h-5 text-white" />
+                                ) : (
+                                    <XCircle className="w-5 h-5 text-white" />
+                                )}
+                            </div>
+                            <div>
+                                <h4 className="font-semibold mb-1">
+                                    {toastType === 'success' ? 'Message Sent!' : 'Error Sending Message'}
+                                </h4>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    {toastMessage}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 className="font-semibold mb-1">Message Sent!</h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Thank you! We will contact you within 24 hours.
-                            </p>
-                        </div>
-                    </div>
-                </motion.div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

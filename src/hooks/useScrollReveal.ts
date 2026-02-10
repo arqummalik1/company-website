@@ -9,6 +9,10 @@ export function useScrollReveal(threshold = 0.1) {
             ([entry]) => {
                 if (entry.isIntersecting && !isVisible) {
                     setIsVisible(true);
+                    // Add 'active' class for CSS reveal animation
+                    if (entry.target.classList.contains('reveal')) {
+                        entry.target.classList.add('active');
+                    }
                 }
             },
             { threshold }

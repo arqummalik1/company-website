@@ -26,7 +26,8 @@ export default {
             animation: {
                 'float': 'float 6s ease-in-out infinite',
                 'bounce-slow': 'bounce 2s infinite',
-                'gradient': 'gradient 8s linear infinite',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'gradient': 'gradient 15s ease infinite',
             },
             keyframes: {
                 float: {

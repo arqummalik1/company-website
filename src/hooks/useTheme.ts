@@ -19,7 +19,27 @@ export function useTheme() {
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme(prev => prev === 'light' ? 'dark' : 'light');
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+
+        // Add transitioning class for smooth animation
+        document.documentElement.classList.add('theme-transitioning');
+
+        // Use View Transitions API for ultra-smooth theme switching
+        // @ts-ignore - View Transitions API is experimental
+        if (document.startViewTransition) {
+            // @ts-ignore
+            document.startViewTransition(() => {
+                setTheme(newTheme);
+            });
+        } else {
+            // Fallback for browsers without View Transitions API
+            setTheme(newTheme);
+        }
+
+        // Remove transitioning class after animation completes
+        setTimeout(() => {
+            document.documentElement.classList.remove('theme-transitioning');
+        }, 500);
     };
 
     return { theme, toggleTheme };

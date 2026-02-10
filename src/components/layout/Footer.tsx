@@ -1,4 +1,3 @@
-import React from 'react';
 import { Linkedin, Twitter, Github } from 'lucide-react';
 
 export function Footer() {
@@ -32,10 +31,12 @@ export function Footer() {
                     {/* Logo & Description */}
                     <div className="col-span-1">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">Q</span>
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+                                Q
                             </div>
-                            <span className="text-2xl font-display font-bold">Qubitt</span>
+                            <span className="text-2xl font-display font-bold text-white">
+                                Qubitt <span className="gradient-text">Technologies</span>
+                            </span>
                         </div>
                         <p className="text-gray-400 text-sm mb-4">
                             Premium custom software development company building world-class digital solutions.
@@ -46,7 +47,7 @@ export function Footer() {
                                     key={social.label}
                                     href={social.href}
                                     aria-label={social.label}
-                                    className="glass p-2 rounded-lg hover:bg-blue-500/20 transition-colors"
+                                    className="glass p-2 rounded-full hover:bg-blue-500/20 transition-colors"
                                 >
                                     <social.icon className="w-5 h-5" />
                                 </a>

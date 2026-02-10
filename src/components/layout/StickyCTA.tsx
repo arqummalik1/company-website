@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, MessageCircle } from 'lucide-react';
 
 export function StickyCTA() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
@@ -6,7 +6,8 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { testimonials } from '@/data/testimonials';
 
 export function Testimonials() {
-    const { ref, isVisible } = useScrollReveal();
+    const { ref } = useScrollReveal();
+    const sectionRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Auto-rotate every 5 seconds
@@ -16,6 +17,25 @@ export function Testimonials() {
         }, 5000);
 
         return () => clearInterval(timer);
+    }, []);
+
+    // Reveal animations
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        const reveals = sectionRef.current?.querySelectorAll('.reveal');
+        reveals?.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
     }, []);
 
     const handlePrevious = () => {
@@ -29,31 +49,20 @@ export function Testimonials() {
     const clientLogos = ['TechCorp', 'InnovateLabs', 'GlobalRetail', 'FintechPro', 'DataSystems'];
 
     return (
-        <section id="testimonials" className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+        <section id="testimonials" className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800" ref={sectionRef}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <motion.div
-                    ref={ref}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7 }}
-                    className="text-center mb-12"
-                >
+                <div ref={ref} className="text-center mb-12 reveal">
                     <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4">
-                        Client <span className="gradient-text">Testimonials</span>
+                        Client <span className="text-gradient">Testimonials</span>
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                         Hear what our clients say about working with us
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Client Logos */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                    className="flex flex-wrap justify-center items-center gap-8 mb-16 opacity-60"
-                >
+                <div className="flex flex-wrap justify-center items-center gap-8 mb-16 opacity-60 reveal stagger-1">
                     {clientLogos.map((logo) => (
                         <div
                             key={logo}
@@ -62,10 +71,10 @@ export function Testimonials() {
                             {logo}
                         </div>
                     ))}
-                </motion.div>
+                </div>
 
                 {/* Carousel */}
-                <div className="relative max-w-4xl mx-auto">
+                <div className="relative max-w-4xl mx-auto reveal stagger-2">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={currentIndex}
@@ -130,8 +139,8 @@ export function Testimonials() {
                                 key={index}
                                 onClick={() => setCurrentIndex(index)}
                                 className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                        ? 'w-8 bg-blue-500'
-                                        : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
+                                    ? 'w-8 bg-blue-500'
+                                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
                                     }`}
                                 aria-label={`Go to testimonial ${index + 1}`}
                             />
