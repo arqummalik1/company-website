@@ -15,6 +15,7 @@ export function BlogCard({ post }: BlogCardProps) {
                     <img
                         src={urlFor(post.mainImage).width(800).height(600).url()}
                         alt={post.mainImage.alt || post.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                 )}

@@ -20,13 +20,15 @@ export function TechStack() {
         { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', category: 'Frontend', description: 'High-level programming language that powers interactive web experiences.' },
         { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg', category: 'Frontend', description: 'Strongly typed superset of JavaScript that compiles to plain JavaScript.' },
         { name: 'React.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', category: 'Frontend', description: 'JavaScript library for building user interfaces with reusable components.' },
+        { name: 'Vue.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg', category: 'Frontend', description: 'Progressive JavaScript framework for building modern, reactive user interfaces.' },
         { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', category: 'Frontend', description: 'React framework for production with server-side rendering and static generation.' },
         { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg', category: 'Frontend', description: 'Utility-first CSS framework for rapidly building custom user interfaces.' },
 
         // Mobile App Development
-        { name: 'React Native', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', category: 'Mobile', description: 'Framework for building native mobile apps using React and JavaScript.' },
-        { name: 'Expo', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', category: 'Mobile', description: 'Platform for making universal native apps with React that run on Android, iOS, and web.' },
+
         { name: 'Flutter', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg', category: 'Mobile', description: 'Google\'s UI toolkit for building natively compiled applications for mobile, web, and desktop.' },
+        { name: 'Swift', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', category: 'Mobile', description: 'Apple\'s powerful programming language for iOS, macOS, and watchOS app development.' },
+        { name: 'Kotlin', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg', category: 'Mobile', description: 'Modern programming language for Android development with concise and safe syntax.' },
 
         // Backend / APIs
         { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg', category: 'Backend', description: 'JavaScript runtime built on Chrome\'s V8 engine for building scalable server-side applications.' },
@@ -35,6 +37,8 @@ export function TechStack() {
         { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', category: 'Backend', description: 'High-level programming language known for its simplicity and versatility in web development and AI.' },
         { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg', category: 'Backend', description: 'High-level Python web framework that encourages rapid development and clean design.' },
         { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg', category: 'Backend', description: 'Modern, fast web framework for building APIs with Python based on standard type hints.' },
+        { name: 'Rust', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg', category: 'Backend', description: 'Systems programming language focused on safety, speed, and concurrency for high-performance applications.' },
+        { name: 'GraphQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg', category: 'Backend', description: 'Query language and runtime for APIs that gives clients the power to ask for exactly what they need.' },
         { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg', category: 'Backend', description: 'Popular server-side scripting language designed for web development.' },
         { name: 'Laravel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg', category: 'Backend', description: 'PHP framework with expressive, elegant syntax for web application development.' },
 
@@ -42,6 +46,8 @@ export function TechStack() {
         { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg', category: 'Database', description: 'NoSQL document database designed for scalability and developer agility.' },
         { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg', category: 'Database', description: 'Powerful, open-source object-relational database system with strong reliability.' },
         { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg', category: 'Database', description: 'Open-source relational database management system widely used for web applications.' },
+        { name: 'Redis', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg', category: 'Database', description: 'In-memory data store used as database, cache, and message broker for ultra-fast performance.' },
+        { name: 'Supabase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg', category: 'Database', description: 'Open-source Firebase alternative with Postgres database, auth, and realtime subscriptions.' },
 
         // UI/UX Design
         { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg', category: 'Design', description: 'Collaborative interface design tool for creating, prototyping, and sharing designs.' },
@@ -50,13 +56,28 @@ export function TechStack() {
 
         // DevOps / Cloud
         { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', category: 'DevOps', description: 'Platform for developing, shipping, and running applications in containers.' },
+        { name: 'Kubernetes', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg', category: 'DevOps', description: 'Container orchestration platform for automating deployment, scaling, and management of apps.' },
         { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg', category: 'Cloud', description: 'Amazon Web Services - comprehensive cloud computing platform with 200+ services.' },
+        { name: 'Vercel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg', category: 'Cloud', description: 'Cloud platform for frontend frameworks and static sites with instant global deployment.' },
         { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg', category: 'Cloud', description: 'Google\'s platform for building web and mobile applications with backend services.' },
 
-        // AI / Tools
+        // AI / Automation / Tools
         { name: 'OpenAI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openai/openai-original.svg', category: 'AI', description: 'AI research company providing GPT models and APIs for natural language processing.' },
+        { name: 'TensorFlow', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg', category: 'AI', description: 'Google\'s open-source machine learning framework for building and deploying ML models at scale.' },
+        { name: 'LangChain', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', category: 'AI', description: 'Framework for building AI applications powered by large language models with chains and agents.' },
+        { name: 'n8n', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-plain.svg', category: 'Automation', description: 'Open-source workflow automation tool for connecting apps, APIs, and AI agents without code.' },
         { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg', category: 'Tools', description: 'Platform for version control and collaboration using Git for software development.' },
         { name: 'Stripe', icon: 'https://images.ctfassets.net/fzn2n1nzq965/HTTOloNPhisV9P4hlMPNA/cacf1bb88b9fc492dfad34378d844280/Stripe_icon_-_square.svg', category: 'Tools', description: 'Payment processing platform for online businesses and e-commerce applications.' },
+        { name: 'Anthropic', icon: 'https://cdn.simpleicons.org/anthropic', category: 'AI', description: 'AI safety and research company, creators of Claude.' },
+        { name: 'Mistral AI', icon: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Mistral_AI_logo.svg', category: 'AI', description: 'Open-weight models and efficient AI solutions.' },
+        { name: 'Hugging Face', icon: 'https://cdn.simpleicons.org/huggingface', category: 'AI', description: 'The platform where the machine learning community collaborates on models, datasets, and applications.' },
+        { name: 'Zapier', icon: 'https://cdn.simpleicons.org/zapier', category: 'Automation', description: 'Easy automation for busy people. Connects your apps and automates workflows.' },
+        { name: 'Make', icon: 'https://cdn.simpleicons.org/make', category: 'Automation', description: 'Visual platform to design, build, and automate anything without code.' },
+        { name: 'Prisma', icon: 'https://cdn.simpleicons.org/prisma', category: 'Database', description: 'Next-generation ORM for Node.js and TypeScript.' },
+        { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite', category: 'Frontend', description: 'Next Generation Frontend Tooling. Instant Server Start.' },
+        { name: 'Bun', icon: 'https://cdn.simpleicons.org/bun', category: 'Backend', description: 'Incredibly fast JavaScript runtime, bundler, test runner, and package manager.' },
+        { name: 'Gemini', icon: 'https://cdn.simpleicons.org/googlegemini', category: 'AI', description: 'Google’s most capable and general AI model.' },
+        { name: 'Midjourney', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg', category: 'AI', description: 'Generative artificial intelligence program and service for creating stunning visuals.' },
     ];
 
     // Duplicate for seamless infinite scroll
@@ -138,7 +159,7 @@ export function TechStack() {
                     className="text-center mt-12"
                 >
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                        30+ cutting-edge technologies • Click any icon to learn more
+                        40+ cutting-edge technologies • Click any icon to learn more
                     </p>
                 </motion.div>
             </div>
@@ -181,6 +202,7 @@ export function TechStack() {
                                             src={selectedTech.icon}
                                             alt={selectedTech.name}
                                             className="w-full h-full object-contain"
+                                            loading="lazy"
                                         />
                                     </div>
                                 </div>

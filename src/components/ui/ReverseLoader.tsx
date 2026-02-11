@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoaderProps {
@@ -8,10 +8,12 @@ interface LoaderProps {
 export function PremiumLoader({ onComplete }: LoaderProps) {
     const [progress, setProgress] = useState(100);
     const [isExiting, setIsExiting] = useState(false);
+    const onCompleteRef = useRef(onComplete);
+    onCompleteRef.current = onComplete;
 
     useEffect(() => {
-        const duration = 1250; // 1.25 seconds — 50% faster
-        const steps = 100;
+        const duration = 1250;
+        const steps = 50; // Reduced from 100 — same visual, half the re-renders
         const interval = duration / steps;
 
         const timer = setInterval(() => {
@@ -19,15 +21,15 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                 if (prev <= 0) {
                     clearInterval(timer);
                     setIsExiting(true);
-                    setTimeout(() => onComplete?.(), 500);
+                    setTimeout(() => onCompleteRef.current?.(), 500);
                     return 0;
                 }
-                return prev - 1;
+                return prev - 2; // Step by 2 since we halved the steps
             });
         }, interval);
 
         return () => clearInterval(timer);
-    }, [onComplete]);
+    }, []);
 
     // Generate particle positions
     const particles = Array.from({ length: 20 }, (_, i) => ({
@@ -92,7 +94,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                 ease: [0.34, 1.56, 0.64, 1],
                                 delay: 0.2
                             }}
-                            className="mb-12 perspective-1000"
+                            className="mb-8 perspective-1000"
                         >
                             <div className="relative inline-block">
                                 {/* Glow effect behind logo */}
@@ -111,7 +113,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
 
                                 {/* Logo */}
                                 <motion.div
-                                    className="relative w-24 h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-500 rounded-3xl flex items-center justify-center shadow-2xl"
+                                    className="relative w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg"
                                     animate={{
                                         rotateY: [0, 360],
                                     }}
@@ -124,7 +126,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                         transformStyle: 'preserve-3d',
                                     }}
                                 >
-                                    <span className="text-white font-bold text-5xl">Q</span>
+                                    <span className="text-white font-bold text-lg">Q</span>
                                 </motion.div>
                             </div>
                         </motion.div>
@@ -134,7 +136,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.5 }}
-                            className="text-3xl font-bold text-white mb-2 tracking-wider"
+                            className="text-xl font-bold text-white mb-1 tracking-wider"
                         >
                             QUBIT
                         </motion.h1>
@@ -143,62 +145,27 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.8, delay: 0.7 }}
-                            className="text-gray-400 text-sm mb-12 tracking-widest"
+                            className="text-gray-400 text-xs mb-8 tracking-widest"
                         >
                             TECHNOLOGIES
                         </motion.p>
 
                         {/* Progress container */}
-                        <div className="max-w-md mx-auto">
+                        <div className="max-w-xs mx-auto">
                             {/* Percentage display with sophisticated animation */}
                             <motion.div
                                 className="mb-6 relative"
-                                key={progress}
-                                initial={{ scale: 1.2, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ duration: 0.15 }}
                             >
-                                <div className="text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                                <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                                     {progress}
-                                    <span className="text-4xl">%</span>
+                                    <span className="text-2xl">%</span>
                                 </div>
-
-                                {/* Animated ring around percentage */}
-                                <motion.div
-                                    className="absolute inset-0 -m-8"
-                                    animate={{
-                                        rotate: 360,
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "linear",
-                                    }}
-                                >
-                                    <svg className="w-full h-full" viewBox="0 0 100 100">
-                                        <circle
-                                            cx="50"
-                                            cy="50"
-                                            r="45"
-                                            fill="none"
-                                            stroke="url(#gradient)"
-                                            strokeWidth="0.5"
-                                            strokeDasharray="4 4"
-                                            opacity="0.3"
-                                        />
-                                        <defs>
-                                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stopColor="#3b82f6" />
-                                                <stop offset="50%" stopColor="#8b5cf6" />
-                                                <stop offset="100%" stopColor="#06b6d4" />
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </motion.div>
                             </motion.div>
 
+
+
                             {/* Progress bar with glass morphism */}
-                            <div className="relative h-2 bg-white/5 backdrop-blur-sm rounded-full overflow-hidden border border-white/10 shadow-lg">
+                            <div className="relative h-1.5 bg-white/5 backdrop-blur-sm rounded-full overflow-hidden border border-white/10 shadow-lg">
                                 {/* Shimmer effect */}
                                 <motion.div
                                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -242,7 +209,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 1 }}
-                                className="mt-6 text-sm text-gray-400 tracking-wider"
+                                className="mt-4 text-xs text-gray-400 tracking-wider"
                             >
                                 <motion.span
                                     animate={{

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export function useTheme() {
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -10,6 +10,7 @@ export function useTheme() {
         // Fall back to system preference
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
+    const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -18,29 +19,48 @@ export function useTheme() {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
+    // Clean up transition timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (transitionTimeoutRef.current) {
+                clearTimeout(transitionTimeoutRef.current);
+            }
+        };
+    }, []);
 
-        // Add transitioning class for smooth animation
-        document.documentElement.classList.add('theme-transitioning');
-
-        // Use View Transitions API for ultra-smooth theme switching
-        // @ts-ignore - View Transitions API is experimental
-        if (document.startViewTransition) {
-            // @ts-ignore
-            document.startViewTransition(() => {
-                setTheme(newTheme);
-            });
-        } else {
-            // Fallback for browsers without View Transitions API
-            setTheme(newTheme);
+    const toggleTheme = useCallback(() => {
+        // Clear any existing transition timeout
+        if (transitionTimeoutRef.current) {
+            clearTimeout(transitionTimeoutRef.current);
         }
 
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        const doc = document.documentElement;
+
+        // Add transitioning class for smooth animation
+        doc.classList.add('theme-transitioning');
+
+        // Check if View Transitions API is supported
+        // @ts-ignore
+        if (!document.startViewTransition) {
+            setTheme(newTheme);
+            transitionTimeoutRef.current = setTimeout(() => {
+                doc.classList.remove('theme-transitioning');
+            }, 300);
+            return;
+        }
+
+        // Pure state change - Quantum Fade
+        // @ts-ignore
+        document.startViewTransition(() => {
+            setTheme(newTheme);
+        });
+
         // Remove transitioning class after animation completes
-        setTimeout(() => {
-            document.documentElement.classList.remove('theme-transitioning');
-        }, 500);
-    };
+        transitionTimeoutRef.current = setTimeout(() => {
+            doc.classList.remove('theme-transitioning');
+        }, 300);
+    }, [theme]);
 
     return { theme, toggleTheme };
 }

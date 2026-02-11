@@ -87,6 +87,7 @@ export function Portfolio() {
                                         <img
                                             src={project.image}
                                             alt={project.title}
+                                            loading="lazy"
                                             className="w-full h-full object-cover"
                                         />
                                         <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60 mix-blend-multiply`} />
@@ -101,13 +102,12 @@ export function Portfolio() {
                                                 <p className="text-gray-200 text-sm mb-4">
                                                     {project.description}
                                                 </p>
-                                                <a
-                                                    href="#"
+                                                <button
                                                     className="inline-flex items-center gap-2 text-white hover:text-blue-300 transition-colors"
                                                 >
                                                     View Case Study
                                                     <ArrowRight className="w-4 h-4" />
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

@@ -1,24 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false); // Controls Glass Effect (> 20px)
+    const [showQuoteButton, setShowQuoteButton] = useState(false); // Controls Button Visibility (> 600px)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { theme, toggleTheme } = useTheme();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const rafRef = useRef<number>(0);
 
     useEffect(() => {
+        let ticking = false;
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 100);
+            if (!ticking) {
+                rafRef.current = requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    setIsScrolled(scrollY > 20); // Immediate glass effect
+                    setShowQuoteButton(scrollY > 600); // Delayed button appearance
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            cancelAnimationFrame(rafRef.current);
+        };
     }, []);
 
-    const scrollToSection = (id: string) => {
+    // Close mobile menu on Escape key
+    useEffect(() => {
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isMobileMenuOpen) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [isMobileMenuOpen]);
+
+    const scrollToSection = useCallback((id: string) => {
+        setIsMobileMenuOpen(false);
+
+        // If not on homepage, navigate there first then scroll
+        if (location.pathname !== '/') {
+            navigate('/', { state: { scrollTo: id } });
+            return;
+        }
+
         const element = document.getElementById(id);
         if (element) {
             const offset = 80;
@@ -29,9 +65,8 @@ export function Navbar() {
                 top: offsetPosition,
                 behavior: 'smooth'
             });
-            setIsMobileMenuOpen(false);
         }
-    };
+    }, [location.pathname, navigate]);
 
     const navLinks = [
         { label: 'Services', id: 'services' },
@@ -43,14 +78,22 @@ export function Navbar() {
     return (
         <nav
             className={cn(
-                'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-                isScrolled ? 'glass shadow-lg' : 'bg-transparent'
+                'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
+                isScrolled
+                    ? 'bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-white/20 dark:border-white/10 shadow-lg'
+                    : 'bg-transparent border-transparent'
             )}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
-                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
+                        if (location.pathname !== '/') {
+                            navigate('/');
+                        } else {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }}>
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
                             Q
                         </div>
@@ -82,9 +125,11 @@ export function Navbar() {
                         >
                             {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                         </button>
-                        <Button onClick={() => scrollToSection('contact')} size="md">
-                            Get a Quote
-                        </Button>
+                        <div className={cn("transition-all duration-300 transform", showQuoteButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none")}>
+                            <Button onClick={() => scrollToSection('contact')} size="md">
+                                Get a Quote
+                            </Button>
+                        </div>
                     </div>
 
                     {/* Mobile Menu Button */}

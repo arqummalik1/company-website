@@ -5,13 +5,15 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import emailjs from '@emailjs/browser';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 export function Contact() {
     const { ref, isVisible } = useScrollReveal();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        countryCode: '+1',
+
         phone: '',
         subject: '',
         message: ''
@@ -38,7 +40,7 @@ export function Contact() {
             }
 
             // Prepare template parameters
-            const fullPhone = formData.phone ? `${formData.countryCode} ${formData.phone}` : 'Not provided';
+            const fullPhone = formData.phone || 'Not provided';
             const templateParams = {
                 from_name: formData.name,
                 from_email: formData.email,
@@ -77,7 +79,7 @@ export function Contact() {
             setFormData({
                 name: '',
                 email: '',
-                countryCode: '+1',
+
                 phone: '',
                 subject: '',
                 message: ''
@@ -108,6 +110,13 @@ export function Contact() {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
+        });
+    };
+
+    const handlePhoneChange = (value: string | undefined) => {
+        setFormData({
+            ...formData,
+            phone: value || ''
         });
     };
 
@@ -254,44 +263,15 @@ export function Contact() {
                                     <label htmlFor="phone" className="block text-sm font-medium mb-2">
                                         Phone Number
                                     </label>
-                                    <div className="flex gap-2">
-                                        <select
-                                            name="countryCode"
-                                            value={formData.countryCode}
-                                            onChange={handleChange}
-                                            disabled={isSubmitting}
-                                            className="w-40 px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                        >
-                                            <option value="+1">🇺🇸 USA +1</option>
-                                            <option value="+44">🇬🇧 UK +44</option>
-                                            <option value="+91">🇮🇳 India +91</option>
-                                            <option value="+86">🇨🇳 China +86</option>
-                                            <option value="+81">🇯🇵 Japan +81</option>
-                                            <option value="+49">🇩🇪 Germany +49</option>
-                                            <option value="+33">🇫🇷 France +33</option>
-                                            <option value="+61">🇦🇺 Australia +61</option>
-                                            <option value="+971">🇦🇪 UAE +971</option>
-                                            <option value="+65">🇸🇬 Singapore +65</option>
-                                            <option value="+7">🇷🇺 Russia +7</option>
-                                            <option value="+82">🇰🇷 S. Korea +82</option>
-                                            <option value="+34">🇪🇸 Spain +34</option>
-                                            <option value="+39">🇮🇹 Italy +39</option>
-                                            <option value="+55">🇧🇷 Brazil +55</option>
-                                            <option value="+52">🇲🇽 Mexico +52</option>
-                                            <option value="+27">🇿🇦 S. Africa +27</option>
-                                            <option value="+60">🇲🇾 Malaysia +60</option>
-                                            <option value="+62">🇮🇩 Indonesia +62</option>
-                                            <option value="+63">🇵🇭 Philippines +63</option>
-                                        </select>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
+                                    <div className="phone-input-container">
+                                        <PhoneInput
+                                            international
+                                            defaultCountry="US"
                                             value={formData.phone}
-                                            onChange={handleChange}
+                                            onChange={handlePhoneChange}
                                             disabled={isSubmitting}
-                                            className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                            placeholder="123-456-7890"
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed [&_.PhoneInputCountry]:mr-3 [&_.PhoneInputCountryIcon]:w-6 [&_.PhoneInputCountryIcon]:h-4 [&_.PhoneInputCountrySelect]:bg-transparent [&_input]:bg-transparent [&_input]:outline-none [&_input]:text-inherit [&_input]:placeholder-gray-400"
+                                            placeholder="Enter phone number"
                                         />
                                     </div>
                                 </div>

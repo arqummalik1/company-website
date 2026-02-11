@@ -7,12 +7,14 @@ export function useScrollReveal(threshold = 0.1) {
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting && !isVisible) {
+                if (entry.isIntersecting) {
                     setIsVisible(true);
                     // Add 'active' class for CSS reveal animation
                     if (entry.target.classList.contains('reveal')) {
                         entry.target.classList.add('active');
                     }
+                    // Stop observing once revealed
+                    observer.unobserve(entry.target);
                 }
             },
             { threshold }
@@ -28,7 +30,8 @@ export function useScrollReveal(threshold = 0.1) {
                 observer.unobserve(currentRef);
             }
         };
-    }, [threshold, isVisible]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [threshold]);
 
     return { ref, isVisible };
 }
