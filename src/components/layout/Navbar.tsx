@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon, ArrowRight } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/hooks/useTheme';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
@@ -51,6 +52,18 @@ export function Navbar() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   const scrollToSection = useCallback((id: string) => {
     setIsMobileMenuOpen(false);
@@ -170,12 +183,13 @@ export function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="md:hidden flex items-center gap-1">
               {/* Mobile Theme Toggle */}
               <button
                 onClick={toggleTheme}
                 className={cn(
-                  'p-2 rounded-xl',
+                  'p-2.5 rounded-xl min-w-[48px] min-h-[48px]',
+                  'flex items-center justify-center',
                   'hover:bg-[var(--surface)]',
                   'transition-all duration-300'
                 )}
@@ -192,7 +206,8 @@ export function Navbar() {
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={cn(
-                  'p-2 rounded-xl',
+                  'p-2.5 rounded-xl min-w-[48px] min-h-[48px]',
+                  'flex items-center justify-center',
                   'hover:bg-[var(--surface)]',
                   'transition-all duration-300'
                 )}
@@ -210,36 +225,46 @@ export function Navbar() {
         </Container>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-[var(--border)]">
-            <div className="px-4 py-6 space-y-4 bg-[var(--surface)]/90 backdrop-blur-[var(--glass-blur)]">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    if (link.route) {
-                      navigate(link.route);
-                      setIsMobileMenuOpen(false);
-                    } else {
-                      scrollToSection(link.id);
-                      setIsMobileMenuOpen(false);
-                    }
-                  }}
-                  className="block w-full text-left text-lg text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors py-2 font-medium"
-                >
-                  {link.label}
-                </button>
-              ))}
-              <RainbowBorderButton 
-                onClick={() => scrollToSection('contact')} 
-                className="w-full mt-4"
-              >
-                Get a Quote
-                <ArrowRight className="w-4 h-4" />
-              </RainbowBorderButton>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden border-t border-[var(--border)]"
+            >
+              <div className="px-4 py-4 space-y-2 bg-[var(--surface)]/90 backdrop-blur-[var(--glass-blur)]">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      if (link.route) {
+                        navigate(link.route);
+                        setIsMobileMenuOpen(false);
+                      } else {
+                        scrollToSection(link.id);
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
+                    className="block w-full text-left text-lg text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors py-3 px-4 font-medium min-h-[48px] flex items-center"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+                <div className="pt-2">
+                  <RainbowBorderButton 
+                    onClick={() => scrollToSection('contact')} 
+                    className="w-full min-h-[48px]"
+                  >
+                    Get a Quote
+                    <ArrowRight className="w-4 h-4" />
+                  </RainbowBorderButton>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
       
       {/* Spacer for fixed navbar */}

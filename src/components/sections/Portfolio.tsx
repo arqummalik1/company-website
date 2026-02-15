@@ -48,12 +48,12 @@ export function Portfolio() {
                 </div>
 
                 {/* Filter Buttons */}
-                <div className="flex flex-wrap justify-center gap-3 mb-12 reveal stagger-1">
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 md:mb-12 reveal stagger-1">
                     {categories.map((category) => (
                         <button
                             key={category}
                             onClick={() => setActiveFilter(category)}
-                            className={`filter-btn px-6 py-2 rounded-full font-medium transition-all duration-300 ${activeFilter === category
+                            className={`filter-btn px-4 sm:px-6 py-2.5 sm:py-2 rounded-full font-medium transition-all duration-300 min-h-[44px] ${activeFilter === category
                                 ? 'bg-blue-600 text-white shadow-lg scale-105'
                                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400'
                                 }`}
@@ -66,7 +66,7 @@ export function Portfolio() {
                 {/* Projects Grid */}
                 <motion.div
                     layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                 >
                     <AnimatePresence mode="popLayout">
                         {filteredProjects.map((project, index) => {

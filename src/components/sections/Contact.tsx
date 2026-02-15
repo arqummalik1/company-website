@@ -149,7 +149,7 @@ export function Contact() {
     ];
 
     return (
-        <section id="contact" className="py-20 bg-white dark:bg-gray-900">
+        <section id="contact" className="py-16 md:py-20 bg-white dark:bg-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Left Column - Info */}
@@ -236,7 +236,7 @@ export function Contact() {
                                             onChange={handleChange}
                                             required
                                             disabled={isSubmitting}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="w-full px-4 py-3.5 sm:py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -252,7 +252,9 @@ export function Contact() {
                                             onChange={handleChange}
                                             required
                                             disabled={isSubmitting}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            inputMode="email"
+                                            autoComplete="email"
+                                            className="w-full px-4 py-3.5 sm:py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                             placeholder="john@example.com"
                                         />
                                     </div>
@@ -270,7 +272,9 @@ export function Contact() {
                                             value={formData.phone}
                                             onChange={handlePhoneChange}
                                             disabled={isSubmitting}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed [&_.PhoneInputCountry]:mr-3 [&_.PhoneInputCountryIcon]:w-6 [&_.PhoneInputCountryIcon]:h-4 [&_.PhoneInputCountrySelect]:bg-transparent [&_input]:bg-transparent [&_input]:outline-none [&_input]:text-inherit [&_input]:placeholder-gray-400"
+                                            inputMode="tel"
+                                            autoComplete="tel"
+                                            className="w-full px-4 py-3.5 sm:py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed [&_.PhoneInputCountry]:mr-3 [&_.PhoneInputCountryIcon]:w-6 [&_.PhoneInputCountryIcon]:h-4 [&_.PhoneInputCountrySelect]:bg-transparent [&_input]:bg-transparent [&_input]:outline-none [&_input]:text-inherit [&_input]:placeholder-gray-400"
                                             placeholder="Enter phone number"
                                         />
                                     </div>
@@ -288,7 +292,7 @@ export function Contact() {
                                         value={formData.subject}
                                         onChange={handleChange}
                                         disabled={isSubmitting}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="w-full px-4 py-3.5 sm:py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="What can we help you with?"
                                     />
                                 </div>

@@ -58,11 +58,11 @@ export function Services() {
     }, []);
 
     return (
-        <section id="services" className="py-24 relative bg-white dark:bg-gray-900" ref={sectionRef}>
+        <section id="services" className="py-16 md:py-24 relative bg-white dark:bg-gray-900" ref={sectionRef}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div ref={ref} className="text-center mb-16 reveal">
-                    <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                <div ref={ref} className="text-center mb-12 md:mb-16 reveal">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         Our <span className="text-gradient">Expertise</span>
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -71,7 +71,7 @@ export function Services() {
                 </div>
 
                 {/* Services Grid - matching index.html service-card pattern */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:20">
                     {services.map((service, index) => {
                         const IconComponent = iconMap[service.icon];
                         const colors = colorMap[service.color] || colorMap.blue;
@@ -81,7 +81,7 @@ export function Services() {
                         return (
                             <div
                                 key={service.id}
-                                className={`service-card group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden reveal ${staggerClass}`}
+                                className={`service-card group relative p-6 md:p-8 rounded-2xl md:rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden reveal ${staggerClass}`}
                             >
                                 {/* Gradient overlay on hover */}
                                 <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />

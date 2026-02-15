@@ -49,11 +49,11 @@ export function Testimonials() {
     const clientLogos = ['TechCorp', 'InnovateLabs', 'GlobalRetail', 'FintechPro', 'DataSystems'];
 
     return (
-        <section id="testimonials" className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800" ref={sectionRef}>
+        <section id="testimonials" className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800" ref={sectionRef}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div ref={ref} className="text-center mb-12 reveal">
-                    <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4">
+                <div ref={ref} className="text-center mb-8 md:mb-12 reveal">
+                    <h2 className="text-3xl sm:text-4xl sm:text-5xl font-display font-bold mb-4">
                         Client <span className="text-gradient">Testimonials</span>
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -119,17 +119,17 @@ export function Testimonials() {
                     {/* Navigation Buttons */}
                     <button
                         onClick={handlePrevious}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 glass p-3 rounded-full hover:bg-blue-500/20 transition-colors"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-16 glass p-2.5 sm:p-3 rounded-full hover:bg-blue-500/20 transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
                         aria-label="Previous testimonial"
                     >
-                        <ChevronLeft className="w-6 h-6" />
+                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
                     <button
                         onClick={handleNext}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 glass p-3 rounded-full hover:bg-blue-500/20 transition-colors"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-16 glass p-2.5 sm:p-3 rounded-full hover:bg-blue-500/20 transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
                         aria-label="Next testimonial"
                     >
-                        <ChevronRight className="w-6 h-6" />
+                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
 
                     {/* Dot Indicators */}

@@ -8,7 +8,21 @@ export default {
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        extend: {
+        screens: {
+      // Base breakpoints
+      'xs': '375px',  // Small phones (iPhone SE)
+      'sm': '640px',  // Large phones (iPhone 12/13/14)
+      'md': '768px',  // Tablets (iPad Mini)
+      'lg': '1024px', // Tablets landscape (iPad Air/Pro)
+      'xl': '1280px', // Laptops
+      '2xl': '1536px', // Desktops
+      
+      // Special breakpoints for device capability
+      'touch': { 'raw': '(hover: none)' },  // Touch devices
+      'hover': { 'raw': '(hover: hover)' },  // Devices with hover
+      'not-touch': { 'raw': '(pointer: fine)' }, // Fine pointer (mouse)
+    },
+    extend: {
             fontFamily: {
                 display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
                 sans: ['Inter', 'system-ui', 'sans-serif'],

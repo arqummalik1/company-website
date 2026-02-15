@@ -89,9 +89,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const sizes = {
-      sm: 'h-9 px-4 text-sm',
-      md: 'h-12 px-6 text-base',
-      lg: 'h-14 px-8 text-lg',
+      sm: 'h-9 px-4 text-sm min-h-[48px]',
+      md: 'h-11 px-5 text-base min-h-[48px]',
+      lg: 'h-14 px-8 text-lg min-h-[48px]',
     };
 
     const iconSizes = {
@@ -226,9 +226,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     };
 
     const sizes = {
-      sm: 'w-8 h-8',
-      md: 'w-10 h-10',
-      lg: 'w-12 h-12',
+      sm: 'w-10 h-10 min-w-[40px] min-h-[40px]',
+      md: 'w-12 h-12 min-w-[48px] min-h-[48px]',
+      lg: 'w-14 h-14 min-w-[56px] min-h-[56px]',
     };
 
     const iconSizes = {

@@ -3,6 +3,7 @@ import { motion, useInView, useMotionValue, useSpring, useTransform } from 'fram
 import { ArrowRight, PlayCircle, ChevronDown, Star, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Stats } from '@/components/sections/Stats';
+import { useIsMobile, useIsTouchDevice, usePrefersReducedMotion } from '@/hooks/useMediaQuery';
 
 /**
  * FloatingOrb - Animated glowing orb component
@@ -224,10 +225,19 @@ function ConnectionLine({
 
 /**
  * Hero - Ultra Enhanced 3D Tech Hero Section
+ * Optimized for mobile: reduces/he disables heavy animations on touch devices
  */
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  
+  // Mobile and touch device detection
+  const isMobile = useIsMobile();
+  const isTouchDevice = useIsTouchDevice();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  
+  // Disable heavy animations on mobile, touch devices, or if user prefers reduced motion
+  const shouldAnimate = !isMobile && !isTouchDevice && !prefersReducedMotion;
   
   // Mouse parallax values
   const mouseX = useMotionValue(0);
@@ -249,6 +259,8 @@ export function Hero() {
   const orbsY = useTransform(smoothY, [-0.5, 0.5], ['-4%', '4%']);
 
   useEffect(() => {
+    // Skip mouse tracking on mobile/touch devices for performance
+    if (!shouldAnimate) return;
     
     const handleMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return;
@@ -296,17 +308,26 @@ export function Hero() {
     <>
       <section
         ref={sectionRef}
-        className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+        className={`relative min-h-screen flex items-center justify-center ${isMobile ? 'pt-16' : 'pt-20'} overflow-hidden`}
         style={{ perspective: '2500px' }}
       >
-        {/* Layer 1: Gradient Orbs - Reduced for performance */}
-        <motion.div 
-          className="absolute inset-0 pointer-events-none"
-          style={{ x: orbsX, y: orbsY }}
-        >
-          <FloatingOrb className="bg-[var(--accent)]/20 -top-20 -left-20" delay={0} duration={8} size="lg" />
-          <FloatingOrb className="bg-[var(--cyan)]/15 bottom-20 right-0" delay={2} duration={10} size="md" />
-        </motion.div>
+        {/* Layer 1: Gradient Orbs - Reduced/disabled on mobile */}
+        {shouldAnimate && (
+          <motion.div 
+            className="absolute inset-0 pointer-events-none"
+            style={{ x: orbsX, y: orbsY }}
+          >
+            <FloatingOrb className="bg-[var(--accent)]/20 -top-20 -left-20" delay={0} duration={8} size="lg" />
+            <FloatingOrb className="bg-[var(--cyan)]/15 bottom-20 right-0" delay={2} duration={10} size="md" />
+          </motion.div>
+        )}
+        {/* Static orb for mobile */}
+        {!shouldAnimate && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute bg-[var(--accent)]/10 -top-10 -left-10 w-48 h-48 rounded-full blur-3xl" />
+            <div className="absolute bg-[var(--cyan)]/10 bottom-10 right-0 w-40 h-40 rounded-full blur-3xl" />
+          </div>
+        )}
 
         {/* Layer 2: Subtle Grid */}
         <motion.div 
@@ -319,45 +340,49 @@ export function Hero() {
         />
 
         {/* Layer 3: Geometric Shapes - Reduced for performance */}
-        <motion.div 
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{ x: shapesX, y: shapesY }}
-        >
-          <GeometricShape type="hexagon" position={{ x: '10%', y: '15%' }} delay={0} />
-          <GeometricShape type="ring" position={{ x: '85%', y: '20%' }} delay={0.5} />
-          <GeometricShape type="cube" position={{ x: '75%', y: '60%' }} delay={1} />
-        </motion.div>
+        {shouldAnimate && (
+          <motion.div 
+            className="absolute inset-0 pointer-events-none overflow-hidden"
+            style={{ x: shapesX, y: shapesY }}
+          >
+            <GeometricShape type="hexagon" position={{ x: '10%', y: '15%' }} delay={0} />
+            <GeometricShape type="ring" position={{ x: '85%', y: '20%' }} delay={0.5} />
+            <GeometricShape type="cube" position={{ x: '75%', y: '60%' }} delay={1} />
+          </motion.div>
+        )}
 
         {/* Layer 4: Particles with Connections */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {particles.map((_, i: number) => (
-            <Particle 
-              key={i} 
-              index={i} 
-              total={particles.length}
-              mouseX={smoothX}
-              mouseY={smoothY}
-            />
-          ))}
-          {/* Connection lines between nearby particles - reduced count */}
-          {particles.slice(0, 3).map((p, i: number) => {
-            const nextP = particles[(i + 2) % particles.length];
-            return (
-              <ConnectionLine 
-                key={`line-${i}`}
-                start={{ x: Math.cos(p.angle) * p.radius, y: Math.sin(p.angle) * p.radius }}
-                end={{ x: Math.cos(nextP.angle) * nextP.radius, y: Math.sin(nextP.angle) * nextP.radius }}
+        {shouldAnimate && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {particles.map((_, i: number) => (
+              <Particle 
+                key={i} 
+                index={i} 
+                total={particles.length}
                 mouseX={smoothX}
                 mouseY={smoothY}
               />
-            );
-          })}
-        </div>
+            ))}
+            {/* Connection lines between nearby particles - reduced count */}
+            {particles.slice(0, 3).map((p, i: number) => {
+              const nextP = particles[(i + 2) % particles.length];
+              return (
+                <ConnectionLine 
+                  key={`line-${i}`}
+                  start={{ x: Math.cos(p.angle) * p.radius, y: Math.sin(p.angle) * p.radius }}
+                  end={{ x: Math.cos(nextP.angle) * nextP.radius, y: Math.sin(nextP.angle) * nextP.radius }}
+                  mouseX={smoothX}
+                  mouseY={smoothY}
+                />
+              );
+            })}
+          </div>
+        )}
 
         {/* Layer 5: Main Content */}
         <motion.div 
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center"
-          style={{ x: contentX, y: contentY }}
+          className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isMobile ? 'py-12' : 'py-20'} text-center`}
+          style={shouldAnimate ? { x: contentX, y: contentY } : undefined}
         >
           {/* Badge with sparkles */}
           <motion.div
@@ -377,7 +402,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-tight"
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight"
           >
             <span className="block">We Build</span>
             <motion.span 
@@ -419,7 +444,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-6 max-w-2xl mx-auto text-xl md:text-2xl text-[var(--text-secondary)] font-light leading-relaxed"
+            className="mt-4 sm:mt-6 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-[var(--text-secondary)] font-light leading-relaxed"
           >
             Premium custom software solutions that transform businesses. 
             From AI-powered applications to scalable SaaS platforms, we bring your vision to life.
