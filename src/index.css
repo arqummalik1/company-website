@@ -145,6 +145,19 @@
     transform: translateZ(0);
     will-change: transform;
   }
+  
+  /* Optimize backdrop-filter for performance */
+  .glass {
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    transform: translateZ(0);
+    will-change: backdrop-filter;
+  }
+  
+  /* Reduce paint areas */
+  .paint-reduce {
+    contain: layout style paint;
+  }
 }
 
 /* ============================================
@@ -371,10 +384,18 @@
     }
     
     .glass {
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+    }
+    
+    /* Disable heavy animations on mobile */
+    .animate-float,
+    .animate-gradient {
+      animation: none !important;
     }
   }
+  
+  /* Prefers-reduced-motion already handled above */
 }
 
 /* ============================================

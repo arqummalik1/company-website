@@ -4,16 +4,18 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
 import { Services } from '@/components/sections/Services';
-import { Features } from '@/components/sections/Features';
-import { Portfolio } from '@/components/sections/Portfolio';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { Blog } from '@/components/sections/Blog';
-import { Contact } from '@/components/sections/Contact';
-import { CTA } from '@/components/sections/CTA';
 import { TechStack } from '@/components/sections/TechStack';
 import { CursorGlow } from '@/components/ui/CursorGlow';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { PremiumLoader } from '@/components/ui/ReverseLoader';
+
+// Lazy load below-fold sections for faster initial load
+const LazyFeatures = lazy(() => import('@/components/sections/Features').then(module => ({ default: module.Features })));
+const LazyPortfolio = lazy(() => import('@/components/sections/Portfolio').then(module => ({ default: module.Portfolio })));
+const LazyTestimonials = lazy(() => import('@/components/sections/Testimonials').then(module => ({ default: module.Testimonials })));
+const LazyBlog = lazy(() => import('@/components/sections/Blog').then(module => ({ default: module.Blog })));
+const LazyCTA = lazy(() => import('@/components/sections/CTA').then(module => ({ default: module.CTA })));
+const LazyContact = lazy(() => import('@/components/sections/Contact').then(module => ({ default: module.Contact })));
 
 // Lazy load pages
 const SinglePost = lazy(() => import('@/pages/SinglePost'));
@@ -26,12 +28,24 @@ function HomePage() {
       <Hero />
       <Services />
       <TechStack />
-      <Features />
-      <Portfolio />
-      <Testimonials />
-      <Blog />
-      <CTA />
-      <Contact />
+      <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyFeatures />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyPortfolio />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyTestimonials />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyBlog />
+      </Suspense>
+      <Suspense fallback={<div className="h-48 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyCTA />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+        <LazyContact />
+      </Suspense>
     </main>
   );
 }

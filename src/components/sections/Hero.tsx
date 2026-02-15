@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, PlayCircle, ChevronDown, Star, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -276,11 +276,11 @@ export function Hero() {
     };
   }, [mouseX, mouseY]);
 
-  // Generate particles
-  const particles = Array.from({ length: 12 }, (_, i) => ({
-    angle: (i / 12) * Math.PI * 2,
-    radius: 180 + Math.random() * 150,
-  }));
+  // Generate particles - reduced for performance
+  const particles = useMemo(() => Array.from({ length: 6 }, (_, i) => ({
+    angle: (i / 6) * Math.PI * 2,
+    radius: 180 + Math.random() * 100,
+  })), []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -299,14 +299,13 @@ export function Hero() {
         className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
         style={{ perspective: '2500px' }}
       >
-        {/* Layer 1: Gradient Orbs (Background) */}
+        {/* Layer 1: Gradient Orbs - Reduced for performance */}
         <motion.div 
           className="absolute inset-0 pointer-events-none"
           style={{ x: orbsX, y: orbsY }}
         >
           <FloatingOrb className="bg-[var(--accent)]/20 -top-20 -left-20" delay={0} duration={8} size="lg" />
           <FloatingOrb className="bg-[var(--cyan)]/15 bottom-20 right-0" delay={2} duration={10} size="md" />
-          <FloatingOrb className="bg-[var(--accent)]/10 top-1/2 left-1/3" delay={4} duration={12} size="sm" />
         </motion.div>
 
         {/* Layer 2: Subtle Grid */}
@@ -319,7 +318,7 @@ export function Hero() {
           }}
         />
 
-        {/* Layer 3: Geometric Shapes */}
+        {/* Layer 3: Geometric Shapes - Reduced for performance */}
         <motion.div 
           className="absolute inset-0 pointer-events-none overflow-hidden"
           style={{ x: shapesX, y: shapesY }}
@@ -327,13 +326,11 @@ export function Hero() {
           <GeometricShape type="hexagon" position={{ x: '10%', y: '15%' }} delay={0} />
           <GeometricShape type="ring" position={{ x: '85%', y: '20%' }} delay={0.5} />
           <GeometricShape type="cube" position={{ x: '75%', y: '60%' }} delay={1} />
-          <GeometricShape type="grid" position={{ x: '5%', y: '70%' }} delay={1.5} />
-          <GeometricShape type="hexagon" position={{ x: '60%', y: '85%' }} delay={2} />
         </motion.div>
 
         {/* Layer 4: Particles with Connections */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {particles.map((_, i) => (
+          {particles.map((_, i: number) => (
             <Particle 
               key={i} 
               index={i} 
@@ -342,9 +339,9 @@ export function Hero() {
               mouseY={smoothY}
             />
           ))}
-          {/* Connection lines between nearby particles */}
-          {particles.slice(0, 6).map((p, i) => {
-            const nextP = particles[(i + 3) % particles.length];
+          {/* Connection lines between nearby particles - reduced count */}
+          {particles.slice(0, 3).map((p, i: number) => {
+            const nextP = particles[(i + 2) % particles.length];
             return (
               <ConnectionLine 
                 key={`line-${i}`}

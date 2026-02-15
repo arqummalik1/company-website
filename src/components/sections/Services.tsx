@@ -2,7 +2,6 @@
 import * as Icons from 'lucide-react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { services } from '@/data/services';
-import { features } from '@/data/features';
 import { Check } from 'lucide-react';
 
 const iconMap: Record<string, any> = {
@@ -106,34 +105,6 @@ export function Services() {
                             </div>
                         );
                     })}
-                </div>
-
-                {/* Features Highlight - Why Choose Qubit */}
-                <div className="mt-20 reveal">
-                    <h3 className="text-3xl font-display font-bold text-center mb-12">
-                        Why Choose <span className="text-gradient">Qubit</span>
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        {features.map((feature, index) => {
-                            const IconComponent = iconMap[feature.icon];
-                            const staggerClass = `stagger-${(index % 4) + 1}`;
-
-                            return (
-                                <div
-                                    key={index}
-                                    className={`text-center reveal ${staggerClass}`}
-                                >
-                                    <div className={`w-12 h-12 mx-auto mb-3 ${feature.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                                        {IconComponent && <IconComponent className="w-6 h-6 text-white" />}
-                                    </div>
-                                    <h4 className="font-semibold mb-2">{feature.title}</h4>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                        {feature.desc}
-                                    </p>
-                                </div>
-                            );
-                        })}
-                    </div>
                 </div>
             </div>
         </section>

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Layers3, Gauge, Rocket, ShieldCheck, Zap, Bot, Cloud, Code2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/Button';
@@ -11,6 +11,7 @@ interface Feature {
   description: string;
   benefits: string[];
   gradient: string;
+  icon: React.ReactNode;
 }
 
 interface FeaturesProps {
@@ -20,53 +21,99 @@ interface FeaturesProps {
 
 const defaultFeatures: Feature[] = [
   {
+    title: 'AI-First Development',
+    description: 'Leverage the power of artificial intelligence to build intelligent applications. From chatbots to automation pipelines, we integrate AI seamlessly into your products.',
+    gradient: 'from-blue-500 to-cyan-500',
+    icon: <Bot className="w-8 h-8" />,
+    benefits: [
+      'Intelligent chatbot integration',
+      'Automation pipelines',
+      'Machine learning models',
+      'Natural language processing',
+    ],
+  },
+  {
     title: 'Scalable Architecture',
     description: 'Built for growth from day one. Our solutions scale seamlessly as your business expands, handling increased traffic and data without compromising performance.',
-    gradient: 'from-blue-500 to-cyan-500',
+    gradient: 'from-purple-500 to-pink-500',
+    icon: <Layers3 className="w-8 h-8" />,
     benefits: [
       'Microservices-ready infrastructure',
       'Auto-scaling cloud deployment',
       'Load-balanced architecture',
-    ],
-  },
-  {
-    title: 'Enterprise Security',
-    description: 'Bank-grade security protocols protect your data. We implement industry-leading encryption, compliance, and access controls.',
-    gradient: 'from-emerald-500 to-teal-500',
-    benefits: [
-      'End-to-end encryption',
-      'SOC 2 compliant processes',
-      'Multi-factor authentication',
+      'Distributed systems design',
     ],
   },
   {
     title: 'Performance First',
-    description: 'Lightning-fast response times ensure exceptional user experiences. Every millisecond matters, and we optimize for speed at every level.',
+    description: 'Lightning-fast response times ensure exceptional user experiences. Every millisecond matters, and we optimize for speed at every level of your application.',
     gradient: 'from-orange-500 to-red-500',
+    icon: <Gauge className="w-8 h-8" />,
     benefits: [
+      'Lighthouse 95+ scores',
+      'Code-splitting & lazy loading',
       'Edge computing deployment',
       'CDN integration',
-      'Lazy loading & caching',
+    ],
+  },
+  {
+    title: 'Fast Delivery',
+    description: 'Get to market faster with our modern development stack and streamlined processes. We minimize iteration cycles while maximizing quality.',
+    gradient: 'from-green-500 to-emerald-500',
+    icon: <Rocket className="w-8 h-8" />,
+    benefits: [
+      'Agile development methodology',
+      'CI/CD pipelines',
+      'Rapid prototyping',
+      'Iterative delivery',
+    ],
+  },
+  {
+    title: 'Enterprise Security',
+    description: 'Bank-grade security protocols protect your data. We implement industry-leading encryption, compliance frameworks, and access controls.',
+    gradient: 'from-cyan-500 to-blue-500',
+    icon: <ShieldCheck className="w-8 h-8" />,
+    benefits: [
+      'End-to-end encryption',
+      'SOC 2 compliant processes',
+      'Multi-factor authentication',
+      'Security audits',
+    ],
+  },
+  {
+    title: 'SaaS Ready',
+    description: 'Everything you need to build a successful SaaS product. From authentication to payments, we provide the foundation for subscription-based businesses.',
+    gradient: 'from-indigo-500 to-purple-500',
+    icon: <Cloud className="w-8 h-8" />,
+    benefits: [
+      'Authentication systems',
+      'Payment integration',
+      'Multi-tenancy support',
+      'Usage analytics',
     ],
   },
   {
     title: 'Data-Driven Insights',
     description: 'Transform raw data into actionable intelligence. Our analytics integration provides real-time visibility into your business metrics.',
-    gradient: 'from-purple-500 to-pink-500',
+    gradient: 'from-violet-500 to-purple-500',
+    icon: <Zap className="w-8 h-8" />,
     benefits: [
       'Real-time dashboards',
       'Custom reporting',
       'Predictive analytics',
+      'Data visualization',
     ],
   },
   {
     title: 'Clean Code Standards',
     description: 'Maintainable, well-documented code that stands the test of time. We follow SOLID principles and industry best practices.',
-    gradient: 'from-indigo-500 to-blue-500',
+    gradient: 'from-teal-500 to-cyan-500',
+    icon: <Code2 className="w-8 h-8" />,
     benefits: [
       'Comprehensive documentation',
       'Unit test coverage',
-      'CI/CD pipelines',
+      'Code reviews',
+      'Best practice adherence',
     ],
   },
 ];
@@ -82,158 +129,354 @@ function FeatureIllustration({
   gradient: string;
 }) {
   const illustrations: Record<string, React.ReactNode> = {
+    'AI-First Development': (
+      <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="ai-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#06b6d4', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
+        {/* Brain/Neural Network - Simplified */}
+        <circle cx="200" cy="150" r="60" fill="url(#ai-grad)" stroke="#3b82f6" strokeWidth="2" />
+        
+        {/* Neural nodes - static */}
+        <circle cx="160" cy="120" r="8" fill="#3b82f6" opacity="0.8" />
+        <circle cx="240" cy="120" r="8" fill="#06b6d4" opacity="0.8" />
+        <circle cx="180" cy="170" r="8" fill="#3b82f6" opacity="0.8" />
+        <circle cx="220" cy="170" r="8" fill="#06b6d4" opacity="0.8" />
+        <circle cx="200" cy="145" r="12" fill="#3b82f6" />
+        
+        {/* Connection lines */}
+        <line x1="160" y1="120" x2="200" y2="145" stroke="#3b82f6" strokeWidth="2" opacity="0.5" />
+        <line x1="240" y1="120" x2="200" y2="145" stroke="#06b6d4" strokeWidth="2" opacity="0.5" />
+        
+        {/* AI Chip */}
+        <rect x="160" y="230" width="80" height="30" rx="4" fill="#1e293b" stroke="#3b82f6" strokeWidth="2" />
+        <text x="200" y="250" textAnchor="middle" fill="#3b82f6" fontSize="12" fontWeight="bold">AI</text>
+      </svg>
+    ),
     'Scalable Architecture': (
       <svg viewBox="0 0 400 300" className="w-full h-full">
-        {/* Background elements */}
         <defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.2 }} />
-            <stop offset="100%" style={{ stopColor: 'var(--cyan)', stopOpacity: 0.2 }} />
+          <linearGradient id="scale-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#8b5cf6', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.3 }} />
           </linearGradient>
         </defs>
         
         {/* Server stack */}
-        <rect x="80" y="100" width="100" height="60" rx="8" fill="var(--accent)" opacity="0.2" stroke="var(--accent)" strokeWidth="2" />
-        <rect x="85" y="110" width="90" height="10" rx="2" fill="var(--accent)" opacity="0.4" />
-        <rect x="85" y="125" width="90" height="10" rx="2" fill="var(--accent)" opacity="0.4" />
-        <rect x="85" y="140" width="90" height="10" rx="2" fill="var(--accent)" opacity="0.4" />
+        <rect x="60" y="100" width="100" height="50" rx="8" fill="url(#scale-grad)" stroke="#8b5cf6" strokeWidth="2" />
+        <rect x="65" y="110" width="90" height="8" rx="2" fill="#8b5cf6" opacity="0.5" />
+        <rect x="65" y="125" width="90" height="8" rx="2" fill="#8b5cf6" opacity="0.3" />
+        <rect x="65" y="140" width="40" height="4" rx="2" fill="#22c55e" />
         
         {/* Server 2 */}
-        <rect x="220" y="100" width="100" height="60" rx="8" fill="var(--cyan)" opacity="0.2" stroke="var(--cyan)" strokeWidth="2" />
-        <rect x="225" y="110" width="90" height="10" rx="2" fill="var(--cyan)" opacity="0.4" />
-        <rect x="225" y="125" width="90" height="10" rx="2" fill="var(--cyan)" opacity="0.4" />
-        <rect x="225" y="140" width="90" height="10" rx="2" fill="var(--cyan)" opacity="0.4" />
+        <rect x="180" y="80" width="100" height="50" rx="8" fill="url(#scale-grad)" stroke="#8b5cf6" strokeWidth="2" />
+        <rect x="185" y="90" width="90" height="8" rx="2" fill="#8b5cf6" opacity="0.5" />
+        <rect x="185" y="105" width="90" height="8" rx="2" fill="#8b5cf6" opacity="0.3" />
+        <rect x="185" y="120" width="40" height="4" rx="2" fill="#22c55e" />
+        
+        {/* Server 3 */}
+        <rect x="300" y="60" width="80" height="40" rx="6" fill="url(#scale-grad)" stroke="#ec4899" strokeWidth="2" />
+        <rect x="305" y="70" width="70" height="6" rx="2" fill="#ec4899" opacity="0.5" />
+        <rect x="305" y="82" width="70" height="6" rx="2" fill="#ec4899" opacity="0.3" />
         
         {/* Connection lines */}
-        <path d="M180 130 L220 130" stroke="var(--accent)" strokeWidth="2" strokeDasharray="4" opacity="0.6" />
-        <path d="M180 150 L220 150" stroke="var(--accent)" strokeWidth="2" strokeDasharray="4" opacity="0.6" />
+        <path d="M160 100 L180 105" stroke="#8b5cf6" strokeWidth="2" strokeDasharray="4" opacity="0.6" />
+        <path d="M280 80 L300 80" stroke="#ec4899" strokeWidth="2" strokeDasharray="4" opacity="0.6" />
         
         {/* Upward arrows */}
-        <path d="M130 70 L130 90" stroke="var(--accent)" strokeWidth="3" />
-        <path d="M125 75 L130 70 L135 75" stroke="var(--accent)" strokeWidth="3" fill="none" />
+        <path d="M110 70 L110 90" stroke="#8b5cf6" strokeWidth="3" />
+        <path d="M105 75 L110 70 L115 75" stroke="#8b5cf6" strokeWidth="3" fill="none" />
         
-        <path d="M270 70 L270 90" stroke="var(--cyan)" strokeWidth="3" />
-        <path d="M265 75 L270 70 L275 75" stroke="var(--cyan)" strokeWidth="3" fill="none" />
+        <path d="M230 50 L230 70" stroke="#8b5cf6" strokeWidth="3" />
+        <path d="M225 55 L230 50 L235 55" stroke="#8b5cf6" strokeWidth="3" fill="none" />
         
         {/* Cloud */}
-        <ellipse cx="320" cy="60" rx="40" ry="25" fill="var(--accent)" opacity="0.15" />
-        <ellipse cx="300" cy="50" rx="25" ry="20" fill="var(--accent)" opacity="0.2" />
-        <ellipse cx="340" cy="50" rx="25" ry="20" fill="var(--accent)" opacity="0.2" />
+        <ellipse cx="340" cy="180" rx="35" ry="20" fill="#8b5cf6" opacity="0.1" />
+        <ellipse cx="325" cy="170" rx="20" ry="15" fill="#8b5cf6" opacity="0.15" />
+        <ellipse cx="355" cy="170" rx="20" ry="15" fill="#8b5cf6" opacity="0.15" />
         
         {/* Scale icon */}
-        <rect x="160" y="200" width="80" height="40" rx="6" fill="var(--accent)" opacity="0.15" stroke="var(--accent)" strokeWidth="2" />
-        <path d="M170 225 L190 210 L210 225" stroke="var(--accent)" strokeWidth="2" fill="none" />
+        <rect x="50" y="200" width="60" height="30" rx="4" fill="#1e293b" stroke="#8b5cf6" strokeWidth="2" />
+        <path d="M60 215 L75 205 L90 215" stroke="#8b5cf6" strokeWidth="2" fill="none" />
         
         {/* Growth chart */}
-        <polyline points="50,250 100,230 150,240 200,210 250,200 300,180 350,160" fill="none" stroke="var(--cyan)" strokeWidth="3" />
-        <circle cx="350" cy="160" r="5" fill="var(--cyan)" />
-      </svg>
-    ),
-    'Enterprise Security': (
-      <svg viewBox="0 0 400 300" className="w-full h-full">
-        {/* Shield */}
-        <path d="M200 40 L280 80 L280 160 Q280 220 200 260 Q120 220 120 160 L120 80 Z" fill="var(--emerald)" opacity="0.15" stroke="var(--emerald)" strokeWidth="3" />
+        <polyline points="180,250 220,235 260,240 300,210 340,190 380,170" fill="none" stroke="#ec4899" strokeWidth="3" />
+        <circle cx="380" cy="170" r="5" fill="#ec4899" />
         
-        {/* Lock */}
-        <rect x="170" y="130" width="60" height="50" rx="8" fill="var(--emerald)" opacity="0.3" stroke="var(--emerald)" strokeWidth="2" />
-        <rect x="175" y="120" width="50" height="20" rx="10" fill="none" stroke="var(--emerald)" strokeWidth="3" />
-        <circle cx="200" cy="155" r="8" fill="var(--emerald)" />
-        
-        {/* Checkmarks */}
-        <path d="M60 80 L80 100 L120 60" stroke="var(--emerald)" strokeWidth="3" fill="none" />
-        <path d="M60 130 L80 150 L120 110" stroke="var(--emerald)" strokeWidth="3" fill="none" />
-        <path d="M60 180 L80 200 L120 160" stroke="var(--emerald)" strokeWidth="3" fill="none" />
-        
-        {/* Key */}
-        <circle cx="320" cy="200" r="25" fill="none" stroke="var(--emerald)" strokeWidth="2" />
-        <rect x="340" y="195" width="40" height="10" fill="var(--emerald)" opacity="0.5" />
-        <rect x="365" y="195" width="8" height="15" fill="var(--emerald)" opacity="0.5" />
-        
-        {/* Security nodes */}
-        <circle cx="340" cy="80" r="8" fill="var(--emerald)" opacity="0.3" />
-        <circle cx="370" cy="120" r="6" fill="var(--emerald)" opacity="0.2" />
-        <circle cx="350" cy="150" r="5" fill="var(--emerald)" opacity="0.25" />
+        {/* Load balancer */}
+        <circle cx="340" cy="240" r="20" fill="none" stroke="#22c55e" strokeWidth="2" />
+        <path d="M335 240 L340 235 L340 245" stroke="#22c55e" strokeWidth="2" fill="none" />
       </svg>
     ),
     'Performance First': (
       <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="perf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#f97316', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#ef4444', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
         {/* Lightning bolt */}
-        <path d="M220 30 L180 120 L200 120 L190 240 L260 110 L230 110 Z" fill="var(--orange)" opacity="0.3" stroke="var(--orange)" strokeWidth="2" />
+        <path d="M230 30 L190 110 L210 110 L200 240 L280 100 L250 100 Z" fill="url(#perf-grad)" stroke="#f97316" strokeWidth="2" />
         
         {/* Speed lines */}
-        <path d="M50 100 L150 100" stroke="var(--orange)" strokeWidth="2" opacity="0.5" />
-        <path d="M30 120 L120 120" stroke="var(--orange)" strokeWidth="2" opacity="0.3" />
-        <path d="M60 140 L140 140" stroke="var(--orange)" strokeWidth="2" opacity="0.4" />
+        <path d="M40 100 L140 100" stroke="#f97316" strokeWidth="2" opacity="0.5" />
+        <path d="M20 120 L110 120" stroke="#f97316" strokeWidth="2" opacity="0.3" />
+        <path d="M50 140 L130 140" stroke="#f97316" strokeWidth="2" opacity="0.4" />
         
         {/* Gauge */}
-        <path d="M80 220 A80 80 0 0 1 240 220" fill="none" stroke="var(--orange)" strokeWidth="8" strokeLinecap="round" opacity="0.3" />
-        <path d="M80 220 A80 80 0 0 1 220 160" fill="none" stroke="var(--orange)" strokeWidth="8" strokeLinecap="round" />
+        <path d="M70 240 A90 90 0 0 1 250 240" fill="none" stroke="#f97316" strokeWidth="10" strokeLinecap="round" opacity="0.2" />
+        <path d="M70 240 A90 90 0 0 1 230 170" fill="none" stroke="#f97316" strokeWidth="10" strokeLinecap="round" />
         
         {/* Gauge needle */}
-        <line x1="160" y1="220" x2="200" y2="170" stroke="var(--orange)" strokeWidth="3" />
-        <circle cx="160" cy="220" r="8" fill="var(--orange)" />
+        <line x1="160" y1="240" x2="210" y2="180" stroke="#ef4444" strokeWidth="3" />
+        <circle cx="160" cy="240" r="10" fill="#ef4444" />
         
         {/* Timer elements */}
-        <circle cx="320" cy="80" r="30" fill="none" stroke="var(--orange)" strokeWidth="3" opacity="0.5" />
-        <path d="M320 55 L320 80 L340 80" stroke="var(--orange)" strokeWidth="2" fill="none" />
+        <circle cx="320" cy="70" r="35" fill="none" stroke="#f97316" strokeWidth="3" opacity="0.5" />
+        <path d="M320 42 L320 70 L345 70" stroke="#f97316" strokeWidth="2" fill="none" />
         
         {/* Checkered flag */}
-        <rect x="300" y="180" width="5" height="40" fill="var(--orange)" opacity="0.5" />
-        <rect x="305" y="180" width="5" height="30" fill="var(--orange)" />
-        <rect x="310" y="180" width="5" height="35" fill="var(--orange)" opacity="0.5" />
-        <rect x="315" y="180" width="5" height="25" fill="var(--orange)" />
-        <rect x="320" y="180" width="5" height="30" fill="var(--orange)" opacity="0.5" />
+        <rect x="290" y="180" width="6" height="45" fill="#f97316" opacity="0.5" />
+        <rect x="296" y="180" width="6" height="35" fill="#f97316" />
+        <rect x="302" y="180" width="6" height="40" fill="#f97316" opacity="0.5" />
+        <rect x="308" y="180" width="6" height="30" fill="#f97316" />
+        <rect x="314" y="180" width="6" height="35" fill="#f97316" opacity="0.5" />
+        
+        {/* Performance metrics */}
+        <rect x="50" y="260" width="60" height="20" rx="4" fill="#1e293b" stroke="#22c55e" strokeWidth="1" />
+        <text x="80" y="274" textAnchor="middle" fill="#22c55e" fontSize="10">99.9%</text>
+        
+        <rect x="130" y="260" width="60" height="20" rx="4" fill="#1e293b" stroke="#f97316" strokeWidth="1" />
+        <text x="160" y="274" textAnchor="middle" fill="#f97316" fontSize="10">50ms</text>
+        
+        <rect x="210" y="260" width="60" height="20" rx="4" fill="#1e293b" stroke="#3b82f6" strokeWidth="1" />
+        <text x="240" y="274" textAnchor="middle" fill="#3b82f6" fontSize="10">95+</text>
+      </svg>
+    ),
+    'Fast Delivery': (
+      <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="fast-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#22c55e', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#14b8a6', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
+        {/* Rocket */}
+        <ellipse cx="200" cy="180" rx="30" ry="60" fill="url(#fast-grad)" stroke="#22c55e" strokeWidth="2" />
+        <ellipse cx="200" cy="150" rx="25" ry="35" fill="#1e293b" stroke="#22c55e" strokeWidth="2" />
+        
+        {/* Window */}
+        <circle cx="200" cy="140" r="12" fill="#22c55e" opacity="0.3" stroke="#22c55e" strokeWidth="2" />
+        
+        {/* Flame */}
+        <path d="M180 230 Q200 270 220 230" fill="#f97316" opacity="0.8">
+          <animate attributeName="d" values="M180 230 Q200 270 220 230;M180 230 Q200 280 220 230;M180 230 Q200 270 220 230" dur="0.5s" repeatCount="indefinite" />
+        </path>
+        <path d="M190 230 Q200 260 210 230" fill="#fbbf24" opacity="0.9">
+          <animate attributeName="d" values="M190 230 Q200 260 210 230;M190 230 Q200 265 210 230;M190 230 Q200 260 210 230" dur="0.5s" repeatCount="indefinite" />
+        </path>
+        
+        {/* Speed trails */}
+        <path d="M100 180 Q150 170 180 180" fill="none" stroke="#22c55e" strokeWidth="2" opacity="0.5" />
+        <path d="M80 200 Q130 190 170 200" fill="none" stroke="#14b8a6" strokeWidth="2" opacity="0.4" />
+        
+        {/* Clouds passing */}
+        <ellipse cx="320" cy="80" rx="30" ry="15" fill="#22c55e" opacity="0.2" />
+        <ellipse cx="350" cy="100" rx="25" ry="12" fill="#22c55e" opacity="0.15" />
+        
+        {/* Progress indicator */}
+        <rect x="50" y="250" width="300" height="20" rx="10" fill="#1e293b" stroke="#22c55e" strokeWidth="1" />
+        <rect x="55" y="253" width="200" height="14" rx="7" fill="#22c55e">
+          <animate attributeName="width" values="100;280;100" dur="3s" repeatCount="indefinite" />
+        </rect>
+        
+        {/* Checkpoints */}
+        <circle cx="80" cy="230" r="8" fill="#22c55e" opacity="0.8" />
+        <circle cx="200" cy="230" r="8" fill="#22c55e" opacity="0.6" />
+        <circle cx="320" cy="230" r="8" fill="#22c55e" opacity="0.4">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="1s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    ),
+    'Enterprise Security': (
+      <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="sec-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#06b6d4', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
+        {/* Shield */}
+        <path d="M200 30 L300 70 L300 160 Q300 230 200 270 Q100 230 100 160 L100 70 Z" fill="url(#sec-grad)" stroke="#06b6d4" strokeWidth="3" />
+        
+        {/* Lock */}
+        <rect x="170" y="130" width="60" height="55" rx="8" fill="#1e293b" stroke="#06b6d4" strokeWidth="2" />
+        <rect x="175" y="118" width="50" height="20" rx="10" fill="none" stroke="#06b6d4" strokeWidth="3" />
+        <circle cx="200" cy="157" r="10" fill="#06b6d4" />
+        <rect x="198" y="157" width="4" height="8" fill="#1e293b" />
+        
+        {/* Checkmarks */}
+        <path d="M50 90 L75 115 L120 70" stroke="#22c55e" strokeWidth="4" fill="none" />
+        <path d="M50 150 L75 175 L120 130" stroke="#22c55e" strokeWidth="4" fill="none" />
+        <path d="M50 210 L75 235 L120 190" stroke="#22c55e" strokeWidth="4" fill="none" />
+        
+        {/* Key */}
+        <circle cx="330" cy="200" r="30" fill="none" stroke="#06b6d4" strokeWidth="2" />
+        <rect x="355" y="195" width="50" height="12" fill="#06b6d4" opacity="0.5" />
+        <rect x="385" y="195" width="8" height="20" fill="#06b6d4" opacity="0.5" />
+        
+        {/* Security nodes */}
+        <circle cx="340" cy="80" r="10" fill="#06b6d4" opacity="0.3">
+          <animate attributeName="r" values="10;12;10" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="370" cy="120" r="8" fill="#3b82f6" opacity="0.2">
+          <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" begin="0.5s" />
+        </circle>
+        <circle cx="350" cy="150" r="6" fill="#06b6d4" opacity="0.25">
+          <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" begin="1s" />
+        </circle>
+        
+        {/* Lock status */}
+        <rect x="160" y="250" width="80" height="25" rx="4" fill="#1e293b" stroke="#22c55e" strokeWidth="1" />
+        <text x="200" y="267" textAnchor="middle" fill="#22c55e" fontSize="11" fontWeight="bold">SECURE</text>
+      </svg>
+    ),
+    'SaaS Ready': (
+      <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="saas-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#6366f1', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#a855f7', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
+        {/* Cloud */}
+        <ellipse cx="200" cy="100" rx="80" ry="40" fill="url(#saas-grad)" stroke="#6366f1" strokeWidth="2" />
+        <ellipse cx="150" cy="90" rx="40" ry="30" fill="url(#saas-grad)" stroke="#6366f1" strokeWidth="2" />
+        <ellipse cx="250" cy="90" rx="40" ry="30" fill="url(#saas-grad)" stroke="#6366f1" strokeWidth="2" />
+        
+        {/* SaaS Dashboard */}
+        <rect x="60" y="150" width="280" height="120" rx="10" fill="#1e293b" stroke="#6366f1" strokeWidth="2" />
+        
+        {/* Sidebar */}
+        <rect x="60" y="150" width="60" height="120" rx="10" fill="#6366f1" opacity="0.2" />
+        <rect x="70" y="165" width="40" height="6" rx="2" fill="#6366f1" opacity="0.5" />
+        <rect x="70" y="180" width="30" height="6" rx="2" fill="#6366f1" opacity="0.3" />
+        <rect x="70" y="195" width="35" height="6" rx="2" fill="#6366f1" opacity="0.3" />
+        <rect x="70" y="210" width="25" height="6" rx="2" fill="#6366f1" opacity="0.3" />
+        
+        {/* Charts */}
+        <rect x="140" y="165" width="80" height="40" rx="4" fill="#6366f1" opacity="0.3" />
+        <rect x="145" y="195" width="15" height="10" rx="2" fill="#a855f7" />
+        <rect x="165" y="185" width="15" height="20" rx="2" fill="#a855f7" />
+        <rect x="185" y="175" width="15" height="30" rx="2" fill="#a855f7" />
+        <rect x="205" y="180" width="15" height="25" rx="2" fill="#a855f7" />
+        
+        {/* Analytics */}
+        <rect x="235" y="165" width="90" height="40" rx="4" fill="#6366f1" opacity="0.2" />
+        <polyline points="245,195 265,185 285,190 315,170" fill="none" stroke="#a855f7" strokeWidth="2" />
+        
+        {/* User avatars */}
+        <circle cx="155" cy="245" r="12" fill="#6366f1" opacity="0.5" />
+        <circle cx="180" cy="245" r="12" fill="#a855f7" opacity="0.5" />
+        <circle cx="205" cy="245" r="12" fill="#6366f1" opacity="0.3" />
+        <rect x="225" y="238" width="35" height="14" rx="7" fill="#6366f1" opacity="0.3" />
+        
+        {/* Subscription badge */}
+        <rect x="270" y="230" width="55" height="20" rx="10" fill="#22c55e" opacity="0.3" />
+        <text x="297" y="244" textAnchor="middle" fill="#22c55e" fontSize="9" fontWeight="bold">PREMIUM</text>
       </svg>
     ),
     'Data-Driven Insights': (
       <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="data-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#8b5cf6', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#d946ef', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
         {/* Bar chart */}
-        <rect x="50" y="180" width="40" height="60" rx="4" fill="var(--accent)" opacity="0.3" />
-        <rect x="100" y="140" width="40" height="100" rx="4" fill="var(--accent)" opacity="0.5" />
-        <rect x="150" y="100" width="40" height="140" rx="4" fill="var(--accent)" opacity="0.7" />
-        <rect x="200" y="160" width="40" height="80" rx="4" fill="var(--cyan)" opacity="0.3" />
-        <rect x="250" y="80" width="40" height="160" rx="4" fill="var(--cyan)" opacity="0.5" />
-        <rect x="300" y="120" width="40" height="120" rx="4" fill="var(--cyan)" opacity="0.7" />
+        <rect x="40" y="180" width="35" height="60" rx="4" fill="#8b5cf6" opacity="0.4" />
+        <rect x="85" y="140" width="35" height="100" rx="4" fill="#8b5cf6" opacity="0.6" />
+        <rect x="130" y="100" width="35" height="140" rx="4" fill="#8b5cf6" opacity="0.8" />
+        <rect x="175" y="160" width="35" height="80" rx="4" fill="#d946ef" opacity="0.4" />
+        <rect x="220" y="70" width="35" height="170" rx="4" fill="#d946ef" opacity="0.6" />
+        <rect x="265" y="120" width="35" height="120" rx="4" fill="#d946ef" opacity="0.8" />
         
         {/* Line chart overlay */}
-        <polyline points="70,180 120,140 170,100 220,160 270,80 320,120" fill="none" stroke="var(--accent)" strokeWidth="3" />
+        <polyline points="57,180 102,140 147,100 192,160 237,70 282,120" fill="none" stroke="#8b5cf6" strokeWidth="3" />
         
         {/* Pie chart */}
-        <circle cx="100" cy="60" r="30" fill="var(--accent)" opacity="0.2" />
-        <path d="M100 60 L100 30 A30 30 0 0 1 130 60 Z" fill="var(--accent)" opacity="0.5" />
-        <path d="M100 60 L130 60 A30 30 0 0 1 100 90 Z" fill="var(--cyan)" opacity="0.5" />
-        <path d="M100 60 L100 90 A30 30 0 0 1 70 60 Z" fill="var(--accent)" opacity="0.3" />
+        <circle cx="340" cy="80" r="40" fill="#1e293b" stroke="#8b5cf6" strokeWidth="2" />
+        <path d="M340 80 L340 40 A40 40 0 0 1 380 80 Z" fill="#8b5cf6" opacity="0.7" />
+        <path d="M340 80 L380 80 A40 40 0 0 1 340 120 Z" fill="#d946ef" opacity="0.7" />
+        <path d="M340 80 L340 120 A40 40 0 0 1 300 80 Z" fill="#8b5cf6" opacity="0.4" />
         
-        {/* Analytics icons */}
-        <circle cx="340" cy="220" r="20" fill="none" stroke="var(--cyan)" strokeWidth="2" opacity="0.5" />
-        <path d="M335 220 L340 225 L350 215" stroke="var(--cyan)" strokeWidth="2" fill="none" />
+        {/* Analytics icon */}
+        <circle cx="340" cy="180" r="25" fill="none" stroke="#d946ef" strokeWidth="2" opacity="0.5" />
+        <path d="M335 180 L340 185 L350 175" stroke="#d946ef" strokeWidth="2" fill="none" />
+        
+        {/* Trend indicators */}
+        <path d="M50 260 L100 250 L150 255" stroke="#22c55e" strokeWidth="2" fill="none" />
+        <path d="M200 260 L250 240 L300 245" stroke="#22c55e" strokeWidth="2" fill="none" />
+        
+        {/* Data points */}
+        <circle cx="57" cy="180" r="4" fill="#8b5cf6" />
+        <circle cx="147" cy="100" r="4" fill="#8b5cf6" />
+        <circle cx="237" cy="70" r="4" fill="#d946ef" />
       </svg>
     ),
     'Clean Code Standards': (
       <svg viewBox="0 0 400 300" className="w-full h-full">
+        <defs>
+          <linearGradient id="code-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#14b8a6', stopOpacity: 0.3 }} />
+            <stop offset="100%" style={{ stopColor: '#06b6d4', stopOpacity: 0.3 }} />
+          </linearGradient>
+        </defs>
+        
         {/* Code brackets */}
-        <text x="80" y="150" fontSize="80" fill="var(--accent)" opacity="0.3">&lt;</text>
-        <text x="260" y="150" fontSize="80" fill="var(--accent)" opacity="0.3">&gt;</text>
+        <text x="60" y="140" fontSize="100" fill="#14b8a6" opacity="0.2">&lt;</text>
+        <text x="280" y="140" fontSize="100" fill="#14b8a6" opacity="0.2">&gt;</text>
         
         {/* Code lines */}
-        <rect x="100" y="80" width="200" height="8" rx="2" fill="var(--accent)" opacity="0.6" />
-        <rect x="100" y="100" width="160" height="8" rx="2" fill="var(--cyan)" opacity="0.5" />
-        <rect x="100" y="120" width="180" height="8" rx="2" fill="var(--accent)" opacity="0.4" />
-        <rect x="100" y="140" width="140" height="8" rx="2" fill="var(--cyan)" opacity="0.6" />
-        <rect x="100" y="160" width="200" height="8" rx="2" fill="var(--accent)" opacity="0.5" />
-        <rect x="100" y="180" width="170" height="8" rx="2" fill="var(--cyan)" opacity="0.4" />
-        <rect x="100" y="200" width="190" height="8" rx="2" fill="var(--accent)" opacity="0.3" />
+        <rect x="90" y="70" width="220" height="8" rx="2" fill="#14b8a6" opacity="0.7" />
+        <rect x="90" y="95" width="180" height="8" rx="2" fill="#06b6d4" opacity="0.6" />
+        <rect x="90" y="120" width="200" height="8" rx="2" fill="#14b8a6" opacity="0.5" />
+        <rect x="90" y="145" width="160" height="8" rx="2" fill="#06b6d4" opacity="0.7" />
+        <rect x="90" y="170" width="220" height="8" rx="2" fill="#14b8a6" opacity="0.6" />
+        <rect x="90" y="195" width="190" height="8" rx="2" fill="#06b6d4" opacity="0.5" />
+        <rect x="90" y="220" width="210" height="8" rx="2" fill="#14b8a6" opacity="0.4" />
         
         {/* Bug icon */}
-        <ellipse cx="340" cy="80" rx="20" ry="15" fill="none" stroke="var(--cyan)" strokeWidth="2" />
-        <circle cx="330" cy="70" r="5" fill="var(--cyan)" opacity="0.5" />
-        <circle cx="350" cy="70" r="5" fill="var(--cyan)" opacity="0.5" />
-        <path d="M325 90 L315 100" stroke="var(--cyan)" strokeWidth="2" />
-        <path d="M355 90 L365 100" stroke="var(--cyan)" strokeWidth="2" />
+        <ellipse cx="340" cy="80" r="25" fill="none" stroke="#ef4444" strokeWidth="2" />
+        <circle cx="328" cy="68" r="6" fill="#ef4444" opacity="0.6" />
+        <circle cx="352" cy="68" r="6" fill="#ef4444" opacity="0.6" />
+        <path d="M322 92 L310 105" stroke="#ef4444" strokeWidth="2" />
+        <path d="M358 92 L370 105" stroke="#ef4444" strokeWidth="2" />
         
         {/* Test checkmark */}
-        <circle cx="340" cy="220" r="25" fill="var(--accent)" opacity="0.2" />
-        <path d="M325 220 L335 230 L355 210" stroke="var(--accent)" strokeWidth="3" fill="none" />
+        <circle cx="340" cy="180" r="30" fill="#22c55e" opacity="0.2" />
+        <path d="M320 180 L335 195 L360 165" stroke="#22c55e" strokeWidth="4" fill="none" />
+        
+        {/* Quality badge */}
+        <rect x="50" y="250" width="70" height="25" rx="4" fill="#1e293b" stroke="#22c55e" strokeWidth="1" />
+        <text x="85" y="267" textAnchor="middle" fill="#22c55e" fontSize="10" fontWeight="bold">100%</text>
+        
+        <rect x="140" y="250" width="70" height="25" rx="4" fill="#1e293b" stroke="#14b8a6" strokeWidth="1" />
+        <text x="175" y="267" textAnchor="middle" fill="#14b8a6" fontSize="10" fontWeight="bold">PASS</text>
+        
+        <rect x="230" y="250" width="70" height="25" rx="4" fill="#1e293b" stroke="#06b6d4" strokeWidth="1" />
+        <text x="265" y="267" textAnchor="middle" fill="#06b6d4" fontSize="10" fontWeight="bold">DOCS</text>
       </svg>
     ),
   };
@@ -290,9 +533,19 @@ function FeatureItem({
 
       {/* Content Side */}
       <div className="flex-1 w-full">
-        <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-4">
-          {feature.title}
-        </h3>
+        <div className="flex items-center gap-3 mb-4">
+          <div className={cn(
+            'w-12 h-12 rounded-xl flex items-center justify-center',
+            'bg-gradient-to-br',
+            feature.gradient,
+            'text-white shadow-lg'
+          )}>
+            {feature.icon}
+          </div>
+          <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)]">
+            {feature.title}
+          </h3>
+        </div>
         <p className="text-lg text-[var(--text-secondary)] mb-6 leading-relaxed">
           {feature.description}
         </p>

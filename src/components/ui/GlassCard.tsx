@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef, ReactNode, memo } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassCardProps {
@@ -119,6 +119,11 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
 GlassCard.displayName = 'GlassCard';
 
 /**
+ * Memoized version of GlassCard for better performance
+ */
+export const GlassCardMemo = memo(GlassCard);
+
+/**
  * GlassCardStatic - Non-animated version of GlassCard
  */
 export const GlassCardStatic = forwardRef<HTMLDivElement, Omit<GlassCardProps, 'animate'>>(
@@ -163,6 +168,11 @@ export const GlassCardStatic = forwardRef<HTMLDivElement, Omit<GlassCardProps, '
 );
 
 GlassCardStatic.displayName = 'GlassCardStatic';
+
+/**
+ * Memoized version of GlassCardStatic for better performance
+ */
+export const GlassCardStaticMemo = memo(GlassCardStatic);
 
 /**
  * GlassCardGroup - Container for multiple glass cards with stagger animation

@@ -13,7 +13,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
 
     useEffect(() => {
         const duration = 1250;
-        const steps = 50; // Reduced from 100 — same visual, half the re-renders
+        const steps = 50;
         const interval = duration / steps;
 
         const timer = setInterval(() => {
@@ -24,7 +24,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                     setTimeout(() => onCompleteRef.current?.(), 500);
                     return 0;
                 }
-                return prev - 2; // Step by 2 since we halved the steps
+                return prev - 2;
             });
         }, interval);
 
@@ -161,8 +161,6 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                     <span className="text-2xl">%</span>
                                 </div>
                             </motion.div>
-
-
 
                             {/* Progress bar with glass morphism */}
                             <div className="relative h-1.5 bg-white/5 backdrop-blur-sm rounded-full overflow-hidden border border-white/10 shadow-lg">
