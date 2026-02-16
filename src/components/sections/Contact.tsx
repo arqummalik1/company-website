@@ -54,7 +54,7 @@ export function Contact() {
                 })
             };
 
-            // Send email to owner (arqummalik1@gmail.com)
+            // Send email to owner (audentix@gmail.com)
             await emailjs.send(
                 serviceId,
                 ownerTemplateId,
@@ -92,8 +92,8 @@ export function Contact() {
             setToastType('error');
             setToastMessage(
                 error instanceof Error && error.message.includes('configuration')
-                    ? 'Email service not configured. Please contact us directly at arqummalik1@gmail.com'
-                    : 'Failed to send message. Please try again or contact us directly at arqummalik1@gmail.com'
+                    ? 'Email service not configured. Please contact us directly at audentix@gmail.com'
+                    : 'Failed to send message. Please try again or contact us directly at audentix@gmail.com'
             );
             setShowToast(true);
         } finally {
@@ -125,7 +125,7 @@ export function Contact() {
         {
             icon: Mail,
             label: 'Email',
-            value: 'arqummalik1@gmail.com',
+            value: 'audentix@gmail.com',
             color: 'text-blue-500'
         },
         {

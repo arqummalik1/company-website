@@ -1,6 +1,7 @@
 import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
+import headerLogo from '@/assets/headerLogo.png';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -28,7 +29,7 @@ export function Footer() {
   };
 
   const contactInfo = [
-    { icon: Mail, label: 'Email', value: 'arqummalik1@gmail.com' },
+    { icon: Mail, label: 'Email', value: 'audentix@gmail.com' },
     { icon: Phone, label: 'Phone', value: '+91 7006082958' },
     { icon: MapPin, label: 'Location', value: 'Jammu, India' },
   ];
@@ -47,12 +48,11 @@ export function Footer() {
           {/* Column 1: Logo & Description */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--cyan)] flex items-center justify-center text-white font-bold text-xl">
-                A
-              </div>
-              <span className="text-xl font-display font-bold text-[var(--text-primary)]">
-                Audentix
-              </span>
+              <img 
+                src={headerLogo} 
+                alt="Audentix" 
+                className="h-10 w-auto"
+              />
             </div>
             <p className="text-[var(--text-secondary)] text-sm mb-6 leading-relaxed">
               Premium custom software development company building world-class digital solutions 
