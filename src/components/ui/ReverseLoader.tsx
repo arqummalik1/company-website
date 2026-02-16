@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import startingLogo from '@/assets/startingLogo.png';
 
 interface LoaderProps {
     onComplete?: () => void;
@@ -112,8 +113,10 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                 />
 
                                 {/* Logo */}
-                                <motion.div
-                                    className="relative w-10 h-10 bg-gradient-to-br from-[var(--accent)] to-[var(--cyan)] rounded-xl flex items-center justify-center shadow-lg"
+                                <motion.img
+                                    src={startingLogo}
+                                    alt="Audentix"
+                                    className="w-16 h-16 object-contain"
                                     animate={{
                                         rotateY: [0, 360],
                                     }}
@@ -125,9 +128,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
                                     style={{
                                         transformStyle: 'preserve-3d',
                                     }}
-                                >
-                                    <span className="text-white font-bold text-lg">A</span>
-                                </motion.div>
+                                />
                             </div>
                         </motion.div>
 

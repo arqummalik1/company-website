@@ -12,7 +12,7 @@ If you disagree with any of these assumptions, please let me know before I proce
 | # | Question | Assumption Made |
 |---|----------|-----------------|
 | 1 | Folder name? | Rename `audentix` → `audentix` (not audentix-v1) |
-| 2 | Email domain? | Change `hello@audentix.com` → `hello@audentix.com` |
+| 2 | Email domain? | Change `hello@audentix.com` → `audentix@gmail.com` strictly use this|
 | 3 | Product names? | Change "Audentix Analytics" → "Audentix Analytics", etc. |
 | 4 | Testimonials? | Update company references, keep quote text as-is |
 | 5 | Sanity/Blog folder? | Rename "audentix-blog" → "audentix-blog" |

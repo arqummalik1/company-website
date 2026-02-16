@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
 import { RainbowBorderButton } from '@/components/ui/RainbowBorderButton';
+import headerLogo from '@/assets/headerLogo.png';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -118,12 +119,11 @@ export function Navbar() {
                 }
               }}
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--cyan)] flex items-center justify-center text-white font-bold text-xl">
-                A
-              </div>
-              <span className="text-xl md:text-2xl font-display font-bold text-[var(--text-primary)]">
-                Audentix
-              </span>
+              <img 
+                src={headerLogo} 
+                alt="Audentix" 
+                className="h-10 w-auto"
+              />
             </div>
 
             {/* Desktop Navigation */}
