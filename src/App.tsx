@@ -8,6 +8,7 @@ import { TechStack } from '@/components/sections/TechStack';
 import { CursorGlow } from '@/components/ui/CursorGlow';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { PremiumLoader } from '@/components/ui/ReverseLoader';
+import { PromoBanner } from '@/components/sections/PromoBanner';
 
 // Lazy load below-fold sections for faster initial load
 const LazyFeatures = lazy(() => import('@/components/sections/Features').then(module => ({ default: module.Features })));
@@ -25,6 +26,8 @@ const ServicesPage = lazy(() => import('@/pages/ServicesPage'));
 const AboutPage = lazy(() => import('@/pages/AboutPage'));
 const ContactPage = lazy(() => import('@/pages/ContactPage'));
 const BlogPage = lazy(() => import('@/pages/Blog'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('@/pages/TermsOfService'));
 
 import { SEO } from '@/components/SEO/SEO';
 
@@ -109,6 +112,8 @@ function App() {
     <>
       {isLoading && <PremiumLoader onComplete={() => setIsLoading(false)} />}
 
+      <PromoBanner />
+
       <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
         <CursorGlow />
 
@@ -159,6 +164,16 @@ function App() {
             <Route path="/blog" element={
               <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
                 <BlogPage />
+              </Suspense>
+            } />
+            <Route path="/privacy-policy" element={
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+                <PrivacyPolicy />
+              </Suspense>
+            } />
+            <Route path="/terms-of-service" element={
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" /></div>}>
+                <TermsOfService />
               </Suspense>
             } />
             <Route path="*" element={

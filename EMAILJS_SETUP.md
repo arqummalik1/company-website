@@ -7,7 +7,7 @@ This guide will walk you through setting up EmailJS to enable dual email functio
 ## 📧 What You'll Achieve
 
 When someone submits the contact form:
-1. **You receive** an email at `arqummalik1@gmail.com` with all form details
+1. **You receive** an email at `audentix@gmail.com` with all form details
 2. **Customer receives** a personalized thank you email at their provided email address
 
 ---
@@ -29,7 +29,7 @@ When someone submits the contact form:
 2. Click **"Add New Service"**
 3. Select **"Gmail"**
 4. Click **"Connect Account"**
-5. Sign in with **arqummalik1@gmail.com**
+5. Sign in with **audentix@gmail.com**
 6. Grant permissions
 7. **Copy the Service ID** (e.g., `service_abc1234`)
    - Save this for later!
@@ -38,7 +38,7 @@ When someone submits the contact form:
 
 ### Step 3: Create Owner Notification Template
 
-This template sends form data to **you** (arqummalik1@gmail.com).
+This template sends form data to **you** (audentix@gmail.com).
 
 1. Click **"Email Templates"** (left sidebar)
 2. Click **"Create New Template"**
@@ -51,7 +51,7 @@ This template sends form data to **you** (arqummalik1@gmail.com).
 
 **To Email:**
 ```
-arqummalik1@gmail.com
+audentix@gmail.com
 ```
 
 **From Name:**
@@ -125,7 +125,7 @@ Audentix Technologies
 
 **From Email:**
 ```
-arqummalik1@gmail.com
+audentix@gmail.com
 ```
 
 **Subject:**
@@ -177,7 +177,7 @@ Thank You for Reaching Out - Audentix Technologies
                 This is an automated response. Please do not reply to this email.
             </p>
             <p style="color: #9CA3AF; font-size: 12px; margin: 5px 0;">
-                For urgent inquiries, email us at <a href="mailto:arqummalik1@gmail.com" style="color: #4F46E5;">arqummalik1@gmail.com</a>
+                For urgent inquiries, email us at <a href="mailto:audentix@gmail.com" style="color: #4F46E5;">audentix@gmail.com</a>
             </p>
         </div>
     </div>
@@ -233,7 +233,7 @@ VITE_EMAILJS_PUBLIC_KEY=user_ghi3456
 
 5. **Verify**:
    - ✅ Success toast appears
-   - ✅ You receive email at `arqummalik1@gmail.com`
+   - ✅ You receive email at `audentix@gmail.com`
    - ✅ Test email address receives thank you email
    - ✅ Both emails are properly formatted
 
@@ -241,7 +241,7 @@ VITE_EMAILJS_PUBLIC_KEY=user_ghi3456
 
 ## 🎯 Expected Results
 
-### Owner Email (arqummalik1@gmail.com)
+### Owner Email (audentix@gmail.com)
 - **Subject**: "New Contact Form Submission - [Customer Name]"
 - **Content**: All form details in a clean, organized format
 - **Includes**: Name, Email, Phone, Company, Service, Message, Timestamp

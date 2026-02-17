@@ -41,32 +41,49 @@ export function Contact() {
 
             // Prepare template parameters
             const fullPhone = formData.phone || 'Not provided';
-            const templateParams = {
+
+            // Common parameters for both templates
+            const commonParams = {
                 from_name: formData.name,
                 from_email: formData.email,
+                email: formData.email,
+                reply_to: formData.email, // EXPLICIT field for Reply-To behavior
                 phone: fullPhone,
-                company: formData.subject || 'Not provided',
+                company: formData.subject || 'Not provided', // Retain for backward compatibility
+                service: formData.subject || 'General Inquiry', // New mapping for {{service}} variable
                 message: formData.message,
-                to_email: formData.email, // For customer thank you email
                 submission_time: new Date().toLocaleString('en-US', {
                     dateStyle: 'full',
                     timeStyle: 'short'
                 })
             };
 
-            // Send email to owner (audentix@gmail.com)
+            // 1. Send email to owner (audentix@gmail.com)
+            // Ideally, your Owner Template "To Email" in Dashboard should be: audentix@gmail.com
+            // But we send to_email explicitly just in case your template uses {{to_email}}
+            const ownerParams = {
+                ...commonParams,
+                to_email: 'audentix@gmail.com',
+            };
+
             await emailjs.send(
                 serviceId,
                 ownerTemplateId,
-                templateParams,
+                ownerParams,
                 publicKey
             );
 
-            // Send thank you email to customer
+            // 2. Send thank you email to customer
+            const customerParams = {
+                ...commonParams,
+                to_email: formData.email, // Customer's email
+                reply_to: 'audentix@gmail.com', // So customer replies to YOU
+            };
+
             await emailjs.send(
                 serviceId,
                 customerTemplateId,
-                templateParams,
+                customerParams,
                 publicKey
             );
 
@@ -79,7 +96,6 @@ export function Contact() {
             setFormData({
                 name: '',
                 email: '',
-
                 phone: '',
                 subject: '',
                 message: ''

@@ -8,20 +8,20 @@ import { useIsMobile, useIsTouchDevice, usePrefersReducedMotion } from '@/hooks/
 /**
  * FloatingOrb - Animated glowing orb component
  */
-function FloatingOrb({ 
-  className, 
+function FloatingOrb({
+  className,
   delay = 0,
   duration = 6,
   size = 'md'
-}: { 
-  className?: string; 
+}: {
+  className?: string;
   delay?: number;
   duration?: number;
   size?: 'sm' | 'md' | 'lg';
 }) {
   const sizes = {
     sm: 'w-32 h-32',
-    md: 'w-48 h-48', 
+    md: 'w-48 h-48',
     lg: 'w-64 h-64',
   };
 
@@ -47,11 +47,11 @@ function FloatingOrb({
 /**
  * GeometricShape - 3D geometric floating shape
  */
-function GeometricShape({ 
-  type, 
-  position, 
-  delay = 0 
-}: { 
+function GeometricShape({
+  type,
+  position,
+  delay = 0
+}: {
   type: 'hexagon' | 'cube' | 'ring' | 'grid';
   position: { x: string; y: string };
   delay?: number;
@@ -59,18 +59,18 @@ function GeometricShape({
   const variants = {
     hexagon: (
       <svg viewBox="0 0 100 100" className="w-full h-full">
-        <polygon 
-          points="50,2 95,25 95,75 50,98 5,75 5,25" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="1.5" 
+        <polygon
+          points="50,2 95,25 95,75 50,98 5,75 5,25"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
           className="opacity-60"
         />
-        <polygon 
-          points="50,15 85,32 85,68 50,85 15,68 15,32" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="0.5" 
+        <polygon
+          points="50,15 85,32 85,68 50,85 15,68 15,32"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.5"
           className="opacity-30"
         />
       </svg>
@@ -109,16 +109,16 @@ function GeometricShape({
   return (
     <motion.div
       className={`absolute pointer-events-none text-[var(--accent)] ${position.x.includes('left') ? 'text-left' : position.x.includes('right') ? 'text-right' : 'text-center'}`}
-      style={{ 
-        left: position.x, 
+      style={{
+        left: position.x,
         top: position.y,
         width: '80px',
         height: '80px',
       }}
       initial={{ opacity: 0, scale: 0, rotate: -180 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1, 
+      animate={{
+        opacity: 1,
+        scale: 1,
         rotate: 0,
         y: [0, -25, 0],
         rotateY: [0, 10, 0],
@@ -141,13 +141,13 @@ function GeometricShape({
 /**
  * Particle - Small animated dot
  */
-function Particle({ 
-  index, 
+function Particle({
+  index,
   total,
-  mouseX, 
-  mouseY 
-}: { 
-  index: number; 
+  mouseX,
+  mouseY
+}: {
+  index: number;
   total: number;
   mouseX: any;
   mouseY: any;
@@ -156,7 +156,7 @@ function Particle({
   const radius = 150 + Math.random() * 200;
   const x = Math.cos(angle) * radius;
   const y = Math.sin(angle) * radius;
-  
+
   const parallaxX = useTransform(mouseX, [-0.5, 0.5], [x * 0.1, x * -0.1]);
   const parallaxY = useTransform(mouseY, [-0.5, 0.5], [y * 0.1, y * -0.1]);
 
@@ -186,13 +186,13 @@ function Particle({
 /**
  * ConnectionLine - Line connecting particles
  */
-function ConnectionLine({ 
-  start, 
-  end, 
-  mouseX, 
-  mouseY 
-}: { 
-  start: { x: number; y: number }; 
+function ConnectionLine({
+  start,
+  end,
+  mouseX,
+  mouseY
+}: {
+  start: { x: number; y: number };
   end: { x: number; y: number };
   mouseX: any;
   mouseY: any;
@@ -203,8 +203,8 @@ function ConnectionLine({
   return (
     <motion.svg
       className="absolute inset-0 pointer-events-none"
-      style={{ 
-        width: '100%', 
+      style={{
+        width: '100%',
         height: '100%',
         x: parallaxX,
         y: parallaxY,
@@ -230,48 +230,48 @@ function ConnectionLine({
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
-  
+
   // Mobile and touch device detection
   const isMobile = useIsMobile();
   const isTouchDevice = useIsTouchDevice();
   const prefersReducedMotion = usePrefersReducedMotion();
-  
+
   // Disable heavy animations on mobile, touch devices, or if user prefers reduced motion
   const shouldAnimate = !isMobile && !isTouchDevice && !prefersReducedMotion;
-  
+
   // Mouse parallax values
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   // Ultra smooth spring animation
   const springConfig = { damping: 12, stiffness: 80 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
-  
+
   // Transform values for different layers with different intensities
   const contentX = useTransform(smoothX, [-0.5, 0.5], ['-2%', '2%']);
   const contentY = useTransform(smoothY, [-0.5, 0.5], ['-2%', '2%']);
-  
+
   const shapesX = useTransform(smoothX, [-0.5, 0.5], ['8%', '-8%']);
   const shapesY = useTransform(smoothY, [-0.5, 0.5], ['8%', '-8%']);
-  
+
   const orbsX = useTransform(smoothX, [-0.5, 0.5], ['-4%', '4%']);
   const orbsY = useTransform(smoothY, [-0.5, 0.5], ['-4%', '4%']);
 
   useEffect(() => {
     // Skip mouse tracking on mobile/touch devices for performance
     if (!shouldAnimate) return;
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return;
-      
+
       const rect = sectionRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      
+
       const x = (e.clientX - centerX) / (rect.width / 2);
       const y = (e.clientY - centerY) / (rect.height / 2);
-      
+
       mouseX.set(x);
       mouseY.set(y);
     };
@@ -313,7 +313,7 @@ export function Hero() {
       >
         {/* Layer 1: Gradient Orbs - Reduced/disabled on mobile */}
         {shouldAnimate && (
-          <motion.div 
+          <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{ x: orbsX, y: orbsY }}
           >
@@ -330,9 +330,9 @@ export function Hero() {
         )}
 
         {/* Layer 2: Subtle Grid */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 pointer-events-none opacity-[0.02]"
-          style={{ 
+          style={{
             backgroundImage: `linear-gradient(var(--text-primary) 1px, transparent 1px),
                              linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)`,
             backgroundSize: '40px 40px',
@@ -341,7 +341,7 @@ export function Hero() {
 
         {/* Layer 3: Geometric Shapes - Reduced for performance */}
         {shouldAnimate && (
-          <motion.div 
+          <motion.div
             className="absolute inset-0 pointer-events-none overflow-hidden"
             style={{ x: shapesX, y: shapesY }}
           >
@@ -355,9 +355,9 @@ export function Hero() {
         {shouldAnimate && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             {particles.map((_, i: number) => (
-              <Particle 
-                key={i} 
-                index={i} 
+              <Particle
+                key={i}
+                index={i}
                 total={particles.length}
                 mouseX={smoothX}
                 mouseY={smoothY}
@@ -367,7 +367,7 @@ export function Hero() {
             {particles.slice(0, 3).map((p, i: number) => {
               const nextP = particles[(i + 2) % particles.length];
               return (
-                <ConnectionLine 
+                <ConnectionLine
                   key={`line-${i}`}
                   start={{ x: Math.cos(p.angle) * p.radius, y: Math.sin(p.angle) * p.radius }}
                   end={{ x: Math.cos(nextP.angle) * nextP.radius, y: Math.sin(nextP.angle) * nextP.radius }}
@@ -380,7 +380,7 @@ export function Hero() {
         )}
 
         {/* Layer 5: Main Content */}
-        <motion.div 
+        <motion.div
           className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${isMobile ? 'py-12' : 'py-20'} text-center`}
           style={shouldAnimate ? { x: contentX, y: contentY } : undefined}
         >
@@ -405,7 +405,7 @@ export function Hero() {
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight"
           >
             <span className="block">We Build</span>
-            <motion.span 
+            <motion.span
               className="block gradient-text-shimmer"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
@@ -413,7 +413,7 @@ export function Hero() {
             >
               Digital
             </motion.span>
-            <motion.span 
+            <motion.span
               className="block relative text-[var(--text-primary)]"
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -446,7 +446,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-4 sm:mt-6 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-[var(--text-secondary)] font-light leading-relaxed"
           >
-            Premium custom software solutions that transform businesses. 
+            Premium custom software solutions that transform businesses.
             From AI-powered applications to scalable SaaS platforms, we bring your vision to life.
           </motion.p>
 
@@ -471,7 +471,7 @@ export function Hero() {
                 Get a Quote
               </Button>
             </motion.div>
-            
+
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -494,7 +494,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="mt-12 flex flex-wrap justify-center gap-8 items-center"
           >
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3"
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -507,13 +507,13 @@ export function Hero() {
                   { img: 'https://randomuser.me/api/portraits/men/46.jpg', name: 'Michael' },
                   { img: 'https://randomuser.me/api/portraits/women/65.jpg', name: 'Sarah' }
                 ].map((person, i) => (
-                  <motion.div 
+                  <motion.div
                     key={i}
                     className="w-10 h-10 rounded-full border-2 border-[var(--bg-primary)] overflow-hidden"
                     whileHover={{ scale: 1.1, zIndex: 10 }}
                     style={{ zIndex: 5 - i }}
                   >
-                    <img 
+                    <img
                       src={person.img}
                       alt={person.name}
                       className="w-full h-full object-cover"
@@ -523,8 +523,8 @@ export function Hero() {
               </div>
               <span className="text-sm text-[var(--text-muted)]">100+ Happy Clients</span>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex items-center gap-2"
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -558,10 +558,10 @@ export function Hero() {
             onClick={() => scrollToSection('services')}
             className="cursor-pointer p-3 rounded-full bg-[var(--surface)]/80 backdrop-blur-md border border-[var(--border)] hover:border-[var(--accent)] hover:shadow-glow transition-all"
             aria-label="Scroll down"
-            animate={{ 
+            animate={{
               y: [0, 8, 0],
             }}
-            transition={{ 
+            transition={{
               duration: 2,
               repeat: Infinity,
               ease: 'easeInOut',
@@ -573,7 +573,7 @@ export function Hero() {
           </motion.button>
         </motion.div>
 
-        {/* Bottom gradient fade */}
+
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none" />
       </section>
 

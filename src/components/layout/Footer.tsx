@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from 'lucide-react';
+import { Linkedin, Twitter, Github, Mail, Phone, MapPin, Instagram } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
 import headerLogo from '@/assets/headerLogo.png';
@@ -14,7 +14,7 @@ export function Footer() {
       { label: 'AI Solutions', href: '#services' },
     ],
     company: [
-      { label: 'About Us', href: '#' },
+      { label: 'About Us', href: '/about' },
       { label: 'Careers', href: '#' },
       { label: 'Blog', href: '#blog' },
       { label: 'Products', href: '/products' },
@@ -36,8 +36,9 @@ export function Footer() {
 
   const socialLinks = [
     { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://www.instagram.com/audentix', label: 'Instagram' },
     { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Github, href: 'https://github.com/audentix/audentix', label: 'GitHub' },
   ];
 
   return (
@@ -48,14 +49,14 @@ export function Footer() {
           {/* Column 1: Logo & Description */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img 
-                src={headerLogo} 
-                alt="Audentix" 
+              <img
+                src={headerLogo}
+                alt="Audentix"
                 className="h-10 w-auto"
               />
             </div>
             <p className="text-[var(--text-secondary)] text-sm mb-6 leading-relaxed">
-              Premium custom software development company building world-class digital solutions 
+              Premium custom software development company building world-class digital solutions
               that transform businesses and deliver exceptional user experiences.
             </p>
             {/* Social Links */}
@@ -139,10 +140,10 @@ export function Footer() {
             © {currentYear} Audentix. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-sm">
+            <a href="/privacy-policy" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-sm">
               Privacy Policy
             </a>
-            <a href="#" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-sm">
+            <a href="/terms-of-service" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-sm">
               Terms of Service
             </a>
           </div>

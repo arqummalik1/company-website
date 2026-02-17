@@ -46,7 +46,7 @@ export function PremiumLoader({ onComplete }: LoaderProps) {
             {!isExiting && (
                 <motion.div
                     initial={{ opacity: 1 }}
-                    exit={{ opacity: 0, scale: 1.1 }}
+                    exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                     className="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center overflow-hidden"
                 >

@@ -18,10 +18,10 @@ Follow the complete guide: [`EMAILJS_SETUP.md`](file:///Users/arqummalik/Softwar
 
 **Quick Steps:**
 1. Create account at https://www.emailjs.com/
-2. Connect your Gmail (arqummalik1@gmail.com)
+2. Connect your Gmail (audentix@gmail.com) -> **This determines who the email comes FROM**
 3. Create 2 email templates (owner + customer)
 4. Copy 4 credentials (Service ID, 2 Template IDs, Public Key)
-5. Update `.env` file with your credentials
+5. Update `.env` file with your credentials (Service ID changes if you switch accounts!)
 6. Restart dev server
 
 ---
@@ -45,7 +45,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_actual_public_key
 
 1. Restart dev server: `npm run dev`
 2. Fill out contact form
-3. Verify you receive email at arqummalik1@gmail.com
+3. Verify you receive email at audentix@gmail.com
 4. Verify customer receives thank you email
 
 ---
