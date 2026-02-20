@@ -31,6 +31,8 @@ export const PromoBanner = () => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
     useEffect(() => {
+        // Ad temporarily hidden as per request
+        /*
         // Show after 30 seconds only if not dismissed
         if (isDismissed) return;
 
@@ -39,6 +41,7 @@ export const PromoBanner = () => {
         }, 30000); // 30 seconds
 
         return () => clearTimeout(timer);
+        */
     }, [isDismissed]);
 
     const handleDismiss = () => {
