@@ -9,7 +9,7 @@ import { CursorGlow } from '@/components/ui/CursorGlow';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { PremiumLoader } from '@/components/ui/ReverseLoader';
 import { PromoBanner } from '@/components/sections/PromoBanner';
-// import { FloatingChatWidget } from '@/components/chat/FloatingChatWidget';
+import { FloatingChatWidget } from '@/components/chat/FloatingChatWidget';
 
 // Lazy load below-fold sections for faster initial load
 const LazyFeatures = lazy(() => import('@/components/sections/Features').then(module => ({ default: module.Features })));
@@ -114,7 +114,7 @@ function App() {
       {isLoading && <PremiumLoader onComplete={() => setIsLoading(false)} />}
 
       <PromoBanner />
-      {/* <FloatingChatWidget /> */}
+      <FloatingChatWidget />
 
       <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
         <CursorGlow />
